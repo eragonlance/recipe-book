@@ -1,0 +1,25 @@
+<form [formGroup]="addIngForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-sm-3">
+      <mat-form-field style="width: 100%">
+        <input matInput placeholder="Ingredient name" formControlName="name">
+        <mat-error *ngIf="name.hasError('required')">Ingredient name is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field>
+        <input matInput type="number" placeholder="Amount" formControlName="amount">
+        <mat-error *ngIf="amount.hasError('positiveNumber')">Amount must be larger than 0</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-xs-12">
+      <button mat-raised-button color="primary" type="submit" [disabled]="addIngForm.invalid">{{ selectedIng? 'Update':'Add' }}</button>
+      <button mat-raised-button color="warn" type="button" (click)="onClickDeleteIngredient()"
+        [disabled]="!selectedIng">Delete</button>
+      <button mat-raised-button color="warn" type="button" (click)="onClickRemoveAll()">Clear</button>
+      <button mat-raised-button color="accent" type="button" (click)="onClickAddRandom(10)">Add Random</button>
+    </div>
+  </div>
+</form>

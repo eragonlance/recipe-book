@@ -1,0 +1,16 @@
+<button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Manage Recipe
+</button>
+<mat-menu #menu>
+  <button mat-menu-item (click)="recipeService.addToShoppingList(recipe)">To Shopping List</button>
+  <button mat-menu-item [routerLink]="['edit']">Edit Recipe</button>
+  <button mat-menu-item (click)="onDeleteRcipe()">Delete Recipe</button>
+</mat-menu>
+<mat-card style="margin-top: 10px">
+  <h2>{{ recipe.name }}</h2>
+  <img [src]="recipe.imagePath" style="height: 200px">
+  <mat-card-content>{{ recipe.description }}</mat-card-content>
+  <h2>Ingredients</h2>
+  <mat-list>
+    <mat-list-item *ngFor="let item of recipe.ingredients">{{ item.name }} ({{ item.amount }})</mat-list-item>
+  </mat-list>
+</mat-card>

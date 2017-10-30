@@ -1,0 +1,25 @@
+@import '../../mat-switcher.styl';
+
+.home-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: $primary;
+  width: 100%;
+  height: 70vh;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.home-panel h1 {
+  color: white;
+  font-size: 40px;
+  font-weight: 500;
+}
+
+#to-recipes {
+  if (matTheme == 0) {
+    color: black;
+  } else {
+    color: white;
+  }
+}

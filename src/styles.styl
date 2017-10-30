@@ -1,0 +1,45 @@
+@import '~flexboxgrid/dist/flexboxgrid.min.css';
+@import url('//fonts.googleapis.com/css?family=Roboto:300,400,500');
+@import 'mat-switcher.styl';
+
+.mat-list-item.active {
+  background-color: $accent !important;
+  transition: background-color 0.3s ease-in !important;
+
+  if (matTheme == 1) {
+    .mat-list-item-content {
+      color: black;
+    }
+  }
+}
+
+body {
+  margin: 0;
+}
+
+@media (min-width: 1920px) {
+  .container {
+    width: 1600px;
+  }
+}
+
+img.icon {
+  height: 26px;
+  margin: 0 4px 3px 0;
+}
+
+icon-url(u) {
+  display: inline-block;
+  background: url(u) no-repeat top left;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+span.icon-delete {
+  icon-url: '/assets/delete.svg';
+}
+
+span.icon-add {
+  icon-url: '/assets/plus.svg';
+}

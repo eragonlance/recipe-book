@@ -1,0 +1,44 @@
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+  <button mat-raised-button color="primary" type="submit">Save</button>
+  <button mat-raised-button color="warn" type="button" [routerLink]="['../']">Cancel</button>
+
+  <mat-card style="margin-top: 10px;">
+    <h2>{{ isInEditMode? 'Edit Recipe':'New Recipe' }}</h2>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Recipe name" formControlName="name">
+      <mat-error *ngIf="name.hasError('required')">Recipe name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Image URL" type="url" formControlName="imagePath">
+      <mat-error *ngIf="imagePath.hasError('required')">Image URL is required</mat-error>
+      <img [src]="recipeForm.get('imagePath').value" alt="" style="max-height: 200px; margin-top: 10px"
+        (error)="imgIsLoaded = false" (load)="imgIsLoaded = true">
+      <img src="/assets/placeholder.svg" alt="" *ngIf="!imgIsLoaded">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <textarea matInput rows="6" placeholder="Description" formControlName="description"></textarea>
+    </mat-form-field>
+
+    <ng-container formArrayName="ingredients">
+      <h3>Ingredients</h3>
+      <ng-container *ngFor="let ingControl of ingredients.controls;let i = index">
+        <ng-container [formGroupName]="i">
+          <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name">
+            <mat-error *ngIf="ingControl.get('name').hasError('required')">Ingredient name is required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Amount" formControlName="amount">
+            <mat-error *ngIf="ingControl.get('amount').hasError('positiveNumber')">Amount must be larger than 0</mat-error>
+          </mat-form-field>
+          <span class="icon-delete" (click)="onRemoveIng(i)"></span>
+          <br>
+        </ng-container>
+      </ng-container>
+      <span class="icon-add" style="margin-top: 8px" (click)="onAddIng()"></span>
+    </ng-container>
+  </mat-card>
+</form>

@@ -1,0 +1,14 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.styl']
+})
+export class FooterComponent implements OnInit {
+  clock: number;
+
+  ngOnInit() {
+    setInterval(() => (this.clock = Date.now()), 1000);
+  }
+}

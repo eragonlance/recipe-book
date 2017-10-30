@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-xs-12 col-md-10 col-md-offset-1">
+    <mat-card>
+      <app-shopping-edit></app-shopping-edit>
+    </mat-card>
+  </div>
+</div>
+<div class="row" *ngIf="ingredients.length !== 0" style="margin-top: 20px;">
+  <div class="col-xs-12 col-md-10 col-md-offset-1">
+    <mat-card>
+      <mat-form-field>
+        <input matInput placeholder="Search" #filterInput (input)="filterString = filterInput.value">
+      </mat-form-field>
+      <mat-nav-list>
+        <a mat-list-item *ngFor="let ing of ingredients | filter:filterString:'name'" [class.active]="ing === selectedIng"
+          (click)="select(ing)">{{ ing.name }} ({{ ing.amount }})</a>
+      </mat-nav-list>
+    </mat-card>
+  </div>
+</div>

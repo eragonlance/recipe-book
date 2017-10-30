@@ -1,0 +1,16 @@
+<mat-toolbar color="primary" class="m-navbar">
+  <a mat-button [routerLink]="['/']">
+    <img src="/assets/recipe.svg" alt="" class="icon">Recipe Book</a>
+  <a mat-button [routerLink]="['/recipes']">Recipes</a>
+  <a mat-button [routerLink]="['/shopping-list']">Shopping List</a>
+  <span style="flex: 1 1 auto"></span>
+  <button mat-button role="button" [matMenuTriggerFor]="menu">Manage</button>
+  <mat-menu #menu>
+    <button mat-menu-item (click)="onSaveData()">Save Data</button>
+    <button mat-menu-item (click)="onFetchData()">Fetch Data</button>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-toolbar color="primary" class="m-header-title" *ngIf="headerTitle !== ''">
+  <h1>{{ headerTitle }}</h1>
+</mat-toolbar>
