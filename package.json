@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "b": "ng build -prod -oh none --build-optimizer"
+    "build": "ng build -prod -oh none --build-optimizer"
   },
   "private": true,
   "dependencies": {
