@@ -1,10 +1,10 @@
-var express = require('express');
-var app = express();
+const express = require('./node_modules/express');
+const app = express();
 
 app.use('/', express.static(__dirname + '/dist'));
-app.get('*', function(req, res) {
+app.get('*', (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
 });
-app.listen(4200, function() {
-  console.log('listening');
+app.listen((port = 4200), () => {
+  console.log('listening at port ' + port);
 });

@@ -1,6 +1,12 @@
 @import '~flexboxgrid/dist/flexboxgrid.min.css';
 @import url('//fonts.googleapis.com/css?family=Roboto:300,400,500');
-@import 'mat-switcher.styl';
+@import 'variables.styl';
+
+if (matTheme == 0) {
+  @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+} else {
+  @import '~@angular/material/prebuilt-themes/purple-green.css';
+}
 
 .mat-list-item.active {
   background-color: $accent !important;

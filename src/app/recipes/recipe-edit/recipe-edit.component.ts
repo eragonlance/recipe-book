@@ -20,7 +20,12 @@ export class RecipeEditComponent implements OnInit {
   imgIsLoaded = false;
   recipeForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipeService, private matDialog: MatDialog) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private recipeService: RecipeService,
+    private matDialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -103,7 +108,10 @@ export class RecipeEditComponent implements OnInit {
         this.ingredients.push(
           new FormGroup({
             name: new FormControl(ing.name, Validators.required),
-            amount: new FormControl(ing.amount, [Validators.required, CustomValidators.positiveNumber])
+            amount: new FormControl(ing.amount, [
+              Validators.required,
+              CustomValidators.positiveNumber
+            ])
           })
         );
       });
