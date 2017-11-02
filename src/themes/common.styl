@@ -1,23 +1,5 @@
 @import '~flexboxgrid/dist/flexboxgrid.min.css';
 @import url('//fonts.googleapis.com/css?family=Roboto:300,400,500');
-@import 'variables.styl';
-
-if (matTheme == 0) {
-  @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-} else {
-  @import '~@angular/material/prebuilt-themes/purple-green.css';
-}
-
-.mat-list-item.active {
-  background-color: $accent !important;
-  transition: background-color 0.3s ease-in !important;
-
-  if (matTheme == 1) {
-    .mat-list-item-content {
-      color: black;
-    }
-  }
-}
 
 body {
   margin: 0;
@@ -27,6 +9,15 @@ body {
   .container {
     width: 1600px;
   }
+}
+
+.home-panel {
+  background-color: $primary;
+}
+
+.mat-list-item.active {
+  background-color: $accent !important;
+  transition: background-color 0.3s ease-in !important;
 }
 
 img.icon {

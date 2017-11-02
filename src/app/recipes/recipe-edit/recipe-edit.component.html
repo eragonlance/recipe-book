@@ -38,7 +38,11 @@
           <br>
         </ng-container>
       </ng-container>
-      <span class="icon-add" style="margin-top: 8px" (click)="onAddIng()"></span>
+      <svg height="30" width="30" (click)="onAddIng()" style="cursor: pointer; margin-top: 8px">
+        <circle cx="15" cy="15" r="15" [attr.fill]="accent" />
+        <line x1="7" y1="15" x2="23" y2="15" stroke-width="1" stroke="black" />
+        <line x1="15" y1="7" x2="15" y2="23" stroke-width="1" stroke="black" />
+      </svg>
     </ng-container>
   </mat-card>
 </form>

@@ -1,3 +1,4 @@
+import { Utility } from './../../shared/utilities';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { RecipeService } from './../recipe.service';
@@ -136,5 +137,8 @@ export class RecipeEditComponent implements OnInit {
   }
   get ingredients(): FormArray {
     return <FormArray>this.recipeForm.get('ingredients');
+  }
+  get accent(): string {
+    return Utility.accentColor;
   }
 }

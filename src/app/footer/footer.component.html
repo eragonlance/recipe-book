@@ -2,5 +2,5 @@
   <a mat-button href="//github.com/eragonlance/recipe-book">
     <img src="/assets/octocat.svg" alt="" class="icon">GitHub Source</a>
   <span style="flex: 1 1 auto"></span>
-  {{ clock | date:'mediumTime' }}
+  <mat-slide-toggle labelPosition="before" (change)="onSwitch($event)">Dark Theme</mat-slide-toggle>
 </mat-toolbar>

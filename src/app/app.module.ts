@@ -14,7 +14,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatMenuModule, MatToolbarModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatSlideToggleModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorComponent, HomeComponent, FooterComponent],
@@ -25,6 +30,7 @@ import { MatButtonModule, MatMenuModule, MatToolbarModule } from '@angular/mater
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
+    MatSlideToggleModule,
     AppRoutingModule
   ],
   providers: [RecipeService, ShoppingService, BackendService],
