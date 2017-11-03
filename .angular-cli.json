@@ -16,6 +16,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        { "input": "themes/common.styl", "output": "main" },
         { "input": "themes/light.styl", "output": "light" },
         { "input": "themes/dark.styl", "lazy": true, "output": "dark" }
       ],
