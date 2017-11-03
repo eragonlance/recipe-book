@@ -32,6 +32,7 @@ export class RecipeService {
     //   [new Ingredient('Cottage cheese', 20), new Ingredient('Bread', 35)]
     // )
   ];
+  recipesRefChanged = new Subject<void>();
 
   constructor(private shoppingService: ShoppingService) {}
 
@@ -53,6 +54,11 @@ export class RecipeService {
 
   addRecipes(recipes: Recipe[]) {
     recipes.forEach(recipe => this.recipes.push(recipe));
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesRefChanged.next();
   }
 
   updateRecipe(id: number, recipe: Recipe): boolean {

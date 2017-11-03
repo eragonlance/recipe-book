@@ -1,3 +1,4 @@
+import { RecipesResolver } from './../shared/resolvers';
 import { DialogModule } from './../dialog/dialog.module';
 
 import { RecipeEditDeactivate } from './recipe-edit/recipe-edit.deactivate';
@@ -23,6 +24,7 @@ const recipeRoutes: Routes = [
   {
     path: '',
     component: RecipesComponent,
+    resolve: { recipes: RecipesResolver },
     children: [
       {
         path: 'new',
@@ -52,7 +54,7 @@ const recipeRoutes: Routes = [
     MatCardModule,
     DialogModule
   ],
-  providers: [RecipeEditDeactivate],
+  providers: [RecipeEditDeactivate, RecipesResolver],
   entryComponents: [DialogComponent]
 })
 export class RecipesModule {}

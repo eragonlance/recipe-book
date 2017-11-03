@@ -1,8 +1,8 @@
 import { BackendService } from '../shared/backend.service';
 import { Utility } from './../shared/utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { RecipeService } from '../recipes/recipe.service';
 
 @Component({
   selector: 'app-header',
@@ -13,10 +13,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   headerTitle = '';
   headerTitleSub: Subscription;
 
-  constructor(private backendService: BackendService) {}
+  constructor(private backendService: BackendService, private recipeService: RecipeService) {}
 
   ngOnInit() {
-    this.headerTitleSub = Utility.headerTitle.subscribe((headerTitle: string) => (this.headerTitle = headerTitle));
+    this.headerTitleSub = Utility.headerTitle.subscribe(
+      (headerTitle: string) => (this.headerTitle = headerTitle)
+    );
   }
 
   onSaveData() {
@@ -24,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onFetchData() {
-    this.backendService.fetchRecipes();
+    this.backendService.fetchRecipes().subscribe(recipes => this.recipeService.setRecipes(recipes));
   }
 
   ngOnDestroy() {

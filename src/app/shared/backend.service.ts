@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class BackendService {
+  recipesFetched = false;
+
   constructor(private http: HttpClient, private recipeService: RecipeService) {}
 
   saveRecipes() {
@@ -16,16 +18,11 @@ export class BackendService {
         'https://recipe-book-eragonlance.firebaseio.com/recipes.json',
         this.recipeService.getRecipes()
       )
-      .subscribe(
-        res => {
-          console.log(res);
-        },
-        error => console.log(error)
-      );
+      .subscribe(undefined, error => console.log(error));
   }
 
-  fetchRecipes() {
-    this.http
+  fetchRecipes(): Observable<Recipe[]> {
+    return this.http
       .get<Recipe[]>('https://recipe-book-eragonlance.firebaseio.com/recipes.json')
       .map(recipes =>
         recipes.map(recipe => {
@@ -35,13 +32,8 @@ export class BackendService {
           return recipe;
         })
       )
-      .subscribe(
-        recipes => {
-          this.recipeService.addRecipes(recipes);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      .do(() => {
+        this.recipesFetched = true;
+      });
   }
 }
