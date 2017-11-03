@@ -16,6 +16,10 @@ export class FooterComponent implements OnInit, AfterViewInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
+    if (!this.link) {
+      return;
+    }
+
     this.primary = '#673ab7';
     this.accent = '#ffd740';
 

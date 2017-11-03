@@ -13,9 +13,7 @@
     <mat-form-field class="full-width">
       <input matInput placeholder="Image URL" type="url" formControlName="imagePath">
       <mat-error *ngIf="imagePath.hasError('required')">Image URL is required</mat-error>
-      <img [src]="recipeForm.get('imagePath').value" alt="" style="max-height: 200px; margin-top: 10px"
-        (error)="imgIsLoaded = false" (load)="imgIsLoaded = true">
-      <img src="/assets/placeholder.svg" alt="" *ngIf="!imgIsLoaded">
+      <img [src]="imagePath.value" alt="" style="max-height: 200px; margin-top: 10px">
     </mat-form-field>
 
     <mat-form-field class="full-width">
