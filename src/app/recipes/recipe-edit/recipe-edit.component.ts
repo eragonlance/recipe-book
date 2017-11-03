@@ -79,13 +79,17 @@ export class RecipeEditComponent implements OnInit {
       const dialogRef = this.matDialog.open(DialogComponent, {
         width: '250px',
         data: {
-          title: 'Do you want to leave?',
-          content: 'All changes will be lost'
+          title: 'Cancel',
+          content: 'Discard all changes and leave?'
         }
       });
       return dialogRef.afterClosed().map(res => (res ? true : false));
     }
     return true;
+  }
+
+  logPreviewError() {
+    console.warn('Cannot load image preview from URL');
   }
 
   private initForm() {

@@ -13,7 +13,7 @@
     <mat-form-field class="full-width">
       <input matInput placeholder="Image URL" type="url" formControlName="imagePath">
       <mat-error *ngIf="imagePath.hasError('required')">Image URL is required</mat-error>
-      <img [src]="imagePath.value" alt="" style="max-height: 200px; margin-top: 10px">
+      <img [src]="imagePath.value" alt="" (error)="logPreviewError()" style="max-height: 200px; margin-top: 10px">
     </mat-form-field>
 
     <mat-form-field class="full-width">

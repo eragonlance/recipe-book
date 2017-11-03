@@ -20,9 +20,6 @@ export class FooterComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.primary = '#673ab7';
-    this.accent = '#ffd740';
-
     const theme = localStorage.getItem('theme');
     if (theme && theme === 'dark.bundle.css') {
       this.isDark = true;
