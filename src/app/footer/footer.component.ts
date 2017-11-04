@@ -10,7 +10,7 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class FooterComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSlideToggle) slideToggle: MatSlideToggle;
-  link = <HTMLLinkElement>document.querySelector('link[rel="stylesheet"]').nextElementSibling;
+  link = <HTMLLinkElement>document.querySelector('link[rel="stylesheet"]');
   isDark = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
@@ -19,6 +19,8 @@ export class FooterComponent implements OnInit, AfterViewInit {
     if (!this.link) {
       return;
     }
+
+    this.link = <HTMLLinkElement>this.link.nextElementSibling;
 
     const theme = localStorage.getItem('theme');
     if (theme && theme === 'dark.bundle.css') {
