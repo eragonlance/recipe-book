@@ -1,14 +1,11 @@
 # Recipe Book
 An Angular practicing project.
-
-To build:
+## To build:
 ```
-npm install
+yarn install
+yarn build
 ```
-```
-npm run-script build
-```
-To serve built dist at port 4200
+## To serve built dist at port 4200
 ```
 node app.js
 ```

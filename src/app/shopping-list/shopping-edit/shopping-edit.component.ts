@@ -1,4 +1,4 @@
-import { CustomValidators } from './../../shared/CustomValidators';
+import { CustomValidators } from './../../shared/custom-validators';
 import { Subscription } from 'rxjs/Subscription';
 import { ShoppingService } from './../../shopping.service';
 import { Ingredient } from './../../shared/ingredient.model';

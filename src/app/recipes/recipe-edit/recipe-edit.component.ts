@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { RecipeService } from './../recipe.service';
 import { Ingredient } from './../../shared/ingredient.model';
-import { CustomValidators } from './../../shared/CustomValidators';
+import { CustomValidators } from './../../shared/custom-validators';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
