@@ -22,10 +22,9 @@ export class FooterComponent implements OnInit, AfterViewInit {
 
     this.link = <HTMLLinkElement>this.link.nextElementSibling;
 
-    const theme = localStorage.getItem('theme');
-    if (theme && theme === 'dark.bundle.css') {
+    if (localStorage.getItem('themeSaved') === '1') {
       this.isDark = true;
-      this.link.href = 'dark.bundle.css';
+      this.link.href = 'css/dark.bundle.css';
       this.primary = '#7b1fa2';
       this.accent = '#69f0ae';
     }
@@ -40,15 +39,15 @@ export class FooterComponent implements OnInit, AfterViewInit {
 
   onSwitch(e: MatSlideToggleChange) {
     if (e.checked) {
-      this.link.href = 'dark.bundle.css';
+      this.link.href = 'css/dark.bundle.css';
       this.primary = '#7b1fa2';
       this.accent = '#69f0ae';
-      localStorage.setItem('theme', 'dark.bundle.css');
+      localStorage.setItem('themeSaved', '1');
     } else {
-      this.link.href = 'light.bundle.css';
+      this.link.href = 'css/light.bundle.css';
       this.primary = '#673ab7';
       this.accent = '#ffd740';
-      localStorage.setItem('theme', 'light.bundle.css');
+      localStorage.removeItem('themeSaved');
     }
   }
 
