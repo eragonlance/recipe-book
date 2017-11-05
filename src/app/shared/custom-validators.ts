@@ -11,7 +11,7 @@ export class CustomValidators {
   static minChars(n: number) {
     return function(control: FormControl) {
       if (!control.value || control.value.length < n) {
-        return { minChars: true };
+        return { minChars: n };
       }
       return null;
     };

@@ -5,7 +5,7 @@
   </mat-form-field>
   <mat-form-field class="full-width">
     <input matInput type="password" placeholder="Password" formControlName="password">
-    <mat-error *ngIf="password.hasError('minChars')">Password must have at least 8 characters</mat-error>
+    <mat-error *ngIf="password.hasError('minChars')">Password must have at least {{ password.errors['minChars'] }} characters</mat-error>
   </mat-form-field>
   <button mat-raised-button color="primary" type="button" (click)="submit('Sign in')"
     style="margin-top: 10px">Sign in</button>
