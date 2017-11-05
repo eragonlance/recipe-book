@@ -1,0 +1,14 @@
+<form [formGroup]="f">
+  <mat-form-field class="full-width">
+    <input matInput type="text" placeholder="Email" formControlName="email">
+    <mat-error *ngIf="email.hasError('email')">Invalid email</mat-error>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input matInput type="password" placeholder="Password" formControlName="password">
+    <mat-error *ngIf="password.hasError('minChars')">Password must have at least 8 characters</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="button" (click)="submit('Sign in')"
+    style="margin-top: 10px">Sign in</button>
+  <h3 style="margin: 16px 0 16px 0">Don't have an account yet?</h3>
+  <button mat-raised-button color="primary" type="button" (click)="submit('Sign up')">Sign up</button>
+</form>

@@ -1,6 +1,5 @@
-import { CustomValidators } from './../../shared/custom-validators';
+import { CustomValidators } from './../shared/custom-validators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Utility } from './../../shared/utilities';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -14,8 +13,6 @@ export class SignInComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    Utility.headerTitle.next('Sign in');
-
     this.f = new FormGroup({
       email: new FormControl(null, [Validators.email]),
       password: new FormControl(null, [CustomValidators.minChars(8)])

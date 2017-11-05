@@ -18,7 +18,6 @@ const appRoutes: Routes = [
     path: 'shopping-list',
     loadChildren: './shopping-list/shopping-list.module#ShoppingListModule'
   },
-  { path: 'signin', loadChildren: './sign-in/sign-in.module#SignInModule' },
   { path: 'error', component: ErrorComponent },
   { path: '**', redirectTo: '/error' }
 ];
