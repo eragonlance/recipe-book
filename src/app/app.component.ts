@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Component, OnInit } from '@angular/core';
 import { Utility } from './shared/utilities';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,10 @@ import { Utility } from './shared/utilities';
 export class AppComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyB9tJVEnEwyjTpRSOPwJZMYATQ6Klzp-cc',
+      authDomain: 'recipe-book-eragonlance.firebaseapp.com'
+    });
+  }
 }

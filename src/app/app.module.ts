@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BackendService } from './shared/backend.service';
 import { RecipeService } from './recipes/recipe.service';
 import { ShoppingService } from './shopping.service';
+import { AuthService } from './shared/auth.service';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -23,7 +24,8 @@ import {
   MatSlideToggleModule,
   MatDialogModule,
   MatCardModule,
-  MatInputModule
+  MatInputModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 @NgModule({
@@ -47,9 +49,10 @@ import {
     MatDialogModule,
     AppRoutingModule,
     MatCardModule,
-    MatInputModule
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
-  providers: [RecipeService, ShoppingService, BackendService],
+  providers: [RecipeService, ShoppingService, BackendService, AuthService],
   bootstrap: [AppComponent],
   entryComponents: [SignInComponent]
 })

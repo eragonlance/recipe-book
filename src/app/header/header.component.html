@@ -2,9 +2,10 @@
   <a mat-button [routerLink]="['/']">
     <img src="/assets/recipe.svg" alt="" class="icon">Recipe Book</a>
   <a mat-button [routerLink]="['/recipes']">Recipes</a>
-  <a mat-button [routerLink]="['/shopping-list']">Shopping List</a>
+  <a mat-button [routerLink]="['/shopping-list']">Shopping list</a>
   <span style="flex: 1 1 auto"></span>
-  <a mat-button (click)="onSignIn()">Sign In</a>
+  <a mat-button *ngIf="!isSignedIn" (click)="onSignIn()">Sign in/Sign up</a>
+  <a mat-button *ngIf="isSignedIn" (click)="onSignOut()">Sign Out</a>
   <button mat-button role="button" [matMenuTriggerFor]="menu">Manage</button>
   <mat-menu #menu>
     <button mat-menu-item (click)="onSaveData()">Save Data</button>
