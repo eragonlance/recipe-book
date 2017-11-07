@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { RecipeService } from '../recipes/recipe.service';
 import { MatDialog } from '@angular/material';
 import { SignInComponent } from '../sign-in/sign-in.component';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -49,7 +50,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSaveData() {
-    this.backendService.saveRecipes();
+    this.authService.getIdToken().then((token: string) => {
+      if (!token) {
+        this.matDialog.open(DialogComponent, {
+          width: '400px',
+          data: {
+            title: 'Not authorized',
+            content: 'Only signed in users are allowed to save to database.',
+            dialType: 'notice'
+          }
+        });
+      } else {
+        this.backendService.saveRecipes(token);
+      }
+    });
   }
 
   onFetchData() {

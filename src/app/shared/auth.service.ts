@@ -18,6 +18,12 @@ export class AuthService {
     return this.auth.signOut();
   }
 
+  getIdToken(): Promise<string> {
+    return this.auth.currentUser
+      ? this.auth.currentUser.getIdToken()
+      : new Promise<string>((resolve, reject) => resolve(''));
+  }
+
   onAuthStateChanged(nextOrObserver: (a: firebase.User) => void): firebase.Unsubscribe {
     return this.auth.onAuthStateChanged(nextOrObserver);
   }

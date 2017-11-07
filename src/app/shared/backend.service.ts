@@ -11,14 +11,11 @@ export class BackendService {
 
   constructor(private http: HttpClient, private recipeService: RecipeService) {}
 
-  saveRecipes() {
-    console.log(this.recipeService.getRecipes());
-    this.http
-      .put(
-        'https://recipe-book-eragonlance.firebaseio.com/recipes.json',
-        this.recipeService.getRecipes()
-      )
-      .subscribe(undefined, error => console.log(error));
+  saveRecipes(token: string): Observable<Object> {
+    return this.http.put(
+      'https://recipe-book-eragonlance.firebaseio.com/recipes.json?auth=' + token,
+      this.recipeService.getRecipes()
+    );
   }
 
   fetchRecipes(): Observable<Recipe[]> {
