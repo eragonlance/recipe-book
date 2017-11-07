@@ -10,6 +10,6 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    Utility.headerTitle.next('');
+    Utility.headerTitle.next('home');
   }
 }

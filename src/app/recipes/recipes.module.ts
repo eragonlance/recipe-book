@@ -1,4 +1,5 @@
 import { RecipesResolver } from './../shared/resolvers';
+import { InvalidIdGuard } from './invalid-id.guard';
 
 import { RecipeEditDeactivate } from './recipe-edit/recipe-edit.deactivate';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
@@ -24,6 +25,7 @@ const recipeRoutes: Routes = [
     path: '',
     component: RecipesComponent,
     resolve: { recipes: RecipesResolver },
+    canActivateChild: [InvalidIdGuard],
     children: [
       {
         path: 'new',
@@ -52,6 +54,6 @@ const recipeRoutes: Routes = [
     MatInputModule,
     MatCardModule
   ],
-  providers: [RecipeEditDeactivate, RecipesResolver]
+  providers: [RecipeEditDeactivate, RecipesResolver, InvalidIdGuard]
 })
 export class RecipesModule {}

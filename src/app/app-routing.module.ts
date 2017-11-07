@@ -18,8 +18,8 @@ const appRoutes: Routes = [
     path: 'shopping-list',
     loadChildren: './shopping-list/shopping-list.module#ShoppingListModule'
   },
-  { path: 'error', component: ErrorComponent },
-  { path: '**', redirectTo: '/error' }
+  { path: '404', component: ErrorComponent },
+  { path: '**', redirectTo: '/404' }
 ];
 
 @NgModule({
