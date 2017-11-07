@@ -3,7 +3,6 @@ import { ShoppingService } from './../shopping.service';
 import { Utility } from './../shared/utilities';
 import { Ingredient } from './../shared/ingredient.model';
 import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
-import { Resolve, Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot, Data } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -17,7 +16,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   filterString = '';
   private listChangedSub: Subscription;
 
-  constructor(public shoppingService: ShoppingService, private route: ActivatedRoute) {}
+  constructor(public shoppingService: ShoppingService) {}
 
   ngOnInit() {
     Utility.headerTitle.next('Shopping list');
@@ -35,18 +34,5 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.listChangedSub.unsubscribe();
-  }
-}
-
-@Injectable()
-export class ShoppingResolver implements Resolve<Ingredient[]> {
-  constructor(private shoppingService: ShoppingService, private router: Router) {}
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Ingredient[] | Observable<Ingredient[]> | Promise<Ingredient[]> {
-    return new Promise<Ingredient[]>((resolve, reject) => {
-      setTimeout(() => {
-        resolve(this.shoppingService.getIngs());
-      }, 0);
-    });
   }
 }
