@@ -1,3 +1,4 @@
+import { DialogComponent } from './dialog/dialog.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -35,7 +36,8 @@ import {
     ErrorComponent,
     HomeComponent,
     FooterComponent,
-    SignInComponent
+    SignInComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,6 @@ import {
   ],
   providers: [RecipeService, ShoppingService, BackendService, AuthService],
   bootstrap: [AppComponent],
-  entryComponents: [SignInComponent]
+  entryComponents: [SignInComponent, DialogComponent]
 })
 export class AppModule {}

@@ -1,5 +1,4 @@
 import { RecipesResolver } from './../shared/resolvers';
-import { DialogModule } from './../dialog/dialog.module';
 
 import { RecipeEditDeactivate } from './recipe-edit/recipe-edit.deactivate';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
@@ -51,10 +50,8 @@ const recipeRoutes: Routes = [
     MatMenuModule,
     MatListModule,
     MatInputModule,
-    MatCardModule,
-    DialogModule
+    MatCardModule
   ],
-  providers: [RecipeEditDeactivate, RecipesResolver],
-  entryComponents: [DialogComponent]
+  providers: [RecipeEditDeactivate, RecipesResolver]
 })
 export class RecipesModule {}
