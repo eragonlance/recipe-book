@@ -38,14 +38,14 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cli@^1.5.0-rc.6":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.5.0.tgz#2abc3ff1648d54ad4a14f82f9d517f371370406c"
+"@angular/cli@^1.6.0-beta.0":
+  version "1.6.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.6.0-beta.0.tgz#45bca8f5564f73df149bbf360f10ee9eb8fcfd4b"
   dependencies:
     "@angular-devkit/build-optimizer" "~0.0.31"
     "@angular-devkit/schematics" "~0.0.34"
     "@ngtools/json-schema" "1.1.0"
-    "@ngtools/webpack" "1.8.0"
+    "@ngtools/webpack" "1.9.0-beta.0"
     "@schematics/angular" "~0.1.0"
     autoprefixer "^6.5.3"
     chalk "~2.2.0"
@@ -70,6 +70,7 @@
     license-webpack-plugin "^1.0.0"
     lodash "^4.11.1"
     memory-fs "^0.4.1"
+    minimatch "^3.0.4"
     node-modules-path "^1.0.0"
     nopt "^4.0.1"
     opn "~5.1.0"
@@ -213,9 +214,9 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ngtools/json-schema/-/json-schema-1.1.0.tgz#c3a0c544d62392acc2813a42c8a0dc6f58f86922"
 
-"@ngtools/webpack@1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-1.8.0.tgz#443204e016aa3a287544eacadb4c95964ae6e2c4"
+"@ngtools/webpack@1.9.0-beta.0":
+  version "1.9.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-1.9.0-beta.0.tgz#8606e63bbd147cda2267831559dc85a46e196872"
   dependencies:
     chalk "~2.2.0"
     enhanced-resolve "^3.1.0"
@@ -226,8 +227,8 @@
     tree-kill "^1.0.0"
 
 "@schematics/angular@~0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.1.0.tgz#cd6c445ead33144a532523d1ccac68c38a2b0050"
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.1.1.tgz#e0ebb7206a4382fecee235a790f689281229defb"
   dependencies:
     "@angular-devkit/core" "0.0.20"
 
@@ -424,8 +425,8 @@ async@^1.5.2:
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
 async@^2.1.2, async@^2.1.5, async@^2.4.1, async@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.5.0.tgz#843190fd6b7357a0b9e1c956edddd5ec8462b54d"
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
   dependencies:
     lodash "^4.14.0"
 
@@ -787,8 +788,8 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000758"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000758.tgz#a235627b1922e878b63164942c991b84de92c810"
+  version "1.0.30000760"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000760.tgz#3ea29473eb78a6ccb09f2eb73ac9e1debfec528d"
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -4870,15 +4871,15 @@ typescript@^2.3.3, typescript@^2.6.1:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.1.tgz#ef39cdea27abac0b500242d6726ab90e0c846631"
 
 uglify-es@^3.1.3:
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/uglify-es/-/uglify-es-3.1.7.tgz#4994b6d7dee6ae0b05bd4fb5d18c9ae2023b6d58"
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/uglify-es/-/uglify-es-3.1.8.tgz#2f21a56871d6354dcc21469cc034c3967f14c5b1"
   dependencies:
     commander "~2.11.0"
     source-map "~0.6.1"
 
 uglify-js@3.1.x:
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.1.7.tgz#13379168b7fcf132ed977254a7802e0a294b1ffb"
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.1.8.tgz#780d08b4f6782fe36ea5484d952362eddaf1d7b8"
   dependencies:
     commander "~2.11.0"
     source-map "~0.6.1"
