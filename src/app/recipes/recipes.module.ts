@@ -1,7 +1,7 @@
-import { RecipesResolver } from './../shared/resolvers';
-import { InvalidIdGuard } from './invalid-id.guard';
-
+import { RecipesResolver } from './recipes.resolver';
+import { RecipeIdResolver } from './recipe-id.resolver';
 import { RecipeEditDeactivate } from './recipe-edit/recipe-edit.deactivate';
+
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
@@ -25,17 +25,17 @@ const recipeRoutes: Routes = [
     path: '',
     component: RecipesComponent,
     resolve: { recipes: RecipesResolver },
-    canActivateChild: [InvalidIdGuard],
     children: [
       {
         path: 'new',
         component: RecipeEditComponent,
         canDeactivate: [RecipeEditDeactivate]
       },
-      { path: ':id', component: RecipeDetailComponent },
+      { path: ':id', component: RecipeDetailComponent, resolve: { recipe: RecipeIdResolver } },
       {
         path: ':id/edit',
         component: RecipeEditComponent,
+        resolve: { recipe: RecipeIdResolver },
         canDeactivate: [RecipeEditDeactivate]
       }
     ]
@@ -54,6 +54,6 @@ const recipeRoutes: Routes = [
     MatInputModule,
     MatCardModule
   ],
-  providers: [RecipeEditDeactivate, RecipesResolver, InvalidIdGuard]
+  providers: [RecipeEditDeactivate, RecipesResolver, RecipeIdResolver]
 })
 export class RecipesModule {}

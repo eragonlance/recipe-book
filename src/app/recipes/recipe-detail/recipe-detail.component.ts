@@ -1,15 +1,7 @@
-import {
-  ActivatedRoute,
-  Params,
-  Router,
-  CanActivateChild,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot
-} from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { RecipeService } from './../recipe.service';
 import { Recipe } from './../recipe.model';
-import { Component, OnInit, Input, Injectable, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../../dialog/dialog.component';
 
@@ -24,13 +16,13 @@ export class RecipeDetailComponent implements OnInit {
   constructor(
     public recipeService: RecipeService,
     private route: ActivatedRoute,
-    private router: Router,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.recipe = this.recipeService.getRecipe(+params['id']);
+    this.route.data.subscribe((data: Data) => {
+      this.recipe = data['recipe'];
     });
   }
 

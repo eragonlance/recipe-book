@@ -5,9 +5,8 @@ import { RecipeService } from './../recipe.service';
 import { Ingredient } from './../../shared/ingredient.model';
 import { CustomValidators } from './../../shared/custom-validators';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router, Data } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Recipe } from '../recipe.model';
 import { DialogComponent } from '../../dialog/dialog.component';
 
 @Component({
@@ -29,8 +28,8 @@ export class RecipeEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.isInEditMode = params['id'] != null;
+    this.route.data.subscribe((data: Data) => {
+      this.isInEditMode = !!data['recipe'];
     });
     this.initForm();
   }
@@ -101,7 +100,7 @@ export class RecipeEditComponent implements OnInit {
     });
 
     if (this.isInEditMode) {
-      const recipe = this.recipeService.getRecipe(+this.route.snapshot.params['id']);
+      const recipe = this.route.snapshot.data['recipe'];
 
       this.recipeForm.reset({
         name: recipe.name,

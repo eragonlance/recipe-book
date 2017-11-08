@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BackendService } from './backend.service';
+import { BackendService } from '../shared/backend.service';
 import { Observable } from 'rxjs/Observable';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Recipe } from '../recipes/recipe.model';
