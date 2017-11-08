@@ -44,7 +44,7 @@ export class RecipeDetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(res => {
-      if (res === true) {
+      if (res) {
         this.recipeService.removeRecipe(this.recipe);
         this.router.navigate(['../'], { relativeTo: this.route });
       }

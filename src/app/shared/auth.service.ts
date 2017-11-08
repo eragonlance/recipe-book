@@ -4,7 +4,12 @@ import 'firebase/auth';
 
 @Injectable()
 export class AuthService {
-  constructor() {}
+  constructor() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyB9tJVEnEwyjTpRSOPwJZMYATQ6Klzp-cc',
+      authDomain: 'recipe-book-eragonlance.firebaseapp.com'
+    });
+  }
 
   createUserWithEmailAndPassword(email: string, password: string): Promise<any> {
     return this.auth.createUserWithEmailAndPassword(email, password);

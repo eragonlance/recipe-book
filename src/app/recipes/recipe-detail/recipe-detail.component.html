@@ -1,9 +1,9 @@
 <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Manage Recipe
 </button>
 <mat-menu #menu>
-  <button mat-menu-item (click)="recipeService.addToShoppingList(recipe)">To Shopping List</button>
-  <button mat-menu-item [routerLink]="['edit']">Edit Recipe</button>
-  <button mat-menu-item (click)="onDeleteRcipe()">Delete Recipe</button>
+  <button mat-menu-item (click)="recipeService.addToShoppingList(recipe)">Add to shopping list</button>
+  <button mat-menu-item [routerLink]="['edit']">Edit recipe</button>
+  <button mat-menu-item (click)="onDeleteRcipe()">Delete recipe</button>
 </mat-menu>
 <mat-card style="margin-top: 10px">
   <h2>{{ recipe.name }}</h2>

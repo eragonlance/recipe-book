@@ -50,20 +50,46 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSaveData() {
-    this.authService.getIdToken().then((token: string) => {
-      if (!token) {
-        this.matDialog.open(DialogComponent, {
-          width: '400px',
-          data: {
-            title: 'Not authorized',
-            content: 'Only signed in users are allowed to save to database.',
-            dialType: 'notice'
+    this.matDialog
+      .open(DialogComponent, {
+        width: '350px',
+        data: {
+          title: 'Save recipes',
+          content: 'Do you want to save all changes to database?',
+          dialType: 'confirm'
+        }
+      })
+      .afterClosed()
+      .subscribe(res => {
+        if (!res) return;
+
+        this.authService.getIdToken().then((token: string) => {
+          if (!token) {
+            this.matDialog.open(DialogComponent, {
+              width: '400px',
+              data: {
+                title: 'Unauthorized',
+                content: 'Only signed in users are allowed to save to database.',
+                dialType: 'notice'
+              }
+            });
+          } else {
+            this.backendService.saveRecipes(token).subscribe(
+              () => {
+                this.matDialog.open(DialogComponent, {
+                  width: '350px',
+                  data: {
+                    title: 'Success',
+                    content: 'All changes have been saved to database',
+                    dialType: 'notice'
+                  }
+                });
+              },
+              err => console.log(err)
+            );
           }
         });
-      } else {
-        this.backendService.saveRecipes(token);
-      }
-    });
+      });
   }
 
   onFetchData() {

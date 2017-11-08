@@ -6,10 +6,10 @@
   <span style="flex: 1 1 auto"></span>
   <a mat-button *ngIf="!isSignedIn" (click)="onSignIn()">Sign in/Sign up</a>
   <a mat-button *ngIf="isSignedIn" (click)="onSignOut()">Sign Out</a>
-  <button mat-button role="button" [matMenuTriggerFor]="menu">Manage</button>
+  <button mat-button role="button" [matMenuTriggerFor]="menu">Database</button>
   <mat-menu #menu>
-    <button mat-menu-item (click)="onSaveData()">Save Data</button>
-    <button mat-menu-item (click)="onFetchData()">Fetch Data</button>
+    <button mat-menu-item (click)="onSaveData()">Save recipes</button>
+    <button mat-menu-item (click)="onFetchData()">Fetch recipes</button>
   </mat-menu>
 </mat-toolbar>
 

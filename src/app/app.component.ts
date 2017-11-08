@@ -1,20 +1,23 @@
-import { Observable } from 'rxjs/Observable';
-import { Component, OnInit } from '@angular/core';
-import { Utility } from './shared/utilities';
-import * as firebase from 'firebase/app';
+import { Recipe } from './recipes/recipe.model';
+import { BackendService } from './shared/backend.service';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { RecipeService } from './recipes/recipe.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.styl']
 })
-export class AppComponent implements OnInit {
-  constructor() {}
+export class AppComponent implements OnInit, AfterViewInit {
+  constructor(private backendService: BackendService, private recipeService: RecipeService) {}
 
-  ngOnInit() {
-    firebase.initializeApp({
-      apiKey: 'AIzaSyB9tJVEnEwyjTpRSOPwJZMYATQ6Klzp-cc',
-      authDomain: 'recipe-book-eragonlance.firebaseapp.com'
-    });
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    if (!this.backendService.recipesFetched) {
+      this.backendService
+        .fetchRecipes()
+        .subscribe((recipes: Recipe[]) => this.recipeService.setRecipes(recipes));
+    }
   }
 }
