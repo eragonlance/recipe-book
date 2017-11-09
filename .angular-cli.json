@@ -1,8 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "recipe-book",
-    "ejected": true
+    "name": "recipe-book"
   },
   "apps": [
     {

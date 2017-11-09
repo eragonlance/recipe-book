@@ -2,8 +2,9 @@ import { CustomValidators } from './../../shared/custom-validators';
 import { Subscription } from 'rxjs/Subscription';
 import { ShoppingService } from './../../shopping.service';
 import { Ingredient } from './../../shared/ingredient.model';
-import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -14,6 +15,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   selectedIng: Ingredient;
   selectedIngSub: Subscription;
   addIngForm: FormGroup;
+  errorStateMatcher: ErrorStateMatcher = {
+    isErrorState: (control: FormControl) => {
+      return control.touched && control.invalid ? true : false;
+    }
+  };
 
   get name() {
     return this.addIngForm.get('name');

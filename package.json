@@ -9,7 +9,7 @@
   "scripts": {
     "ng": "ng",
     "build": "webpack",
-    "start": "webpack-dev-server --port=4200"
+    "start": "ng serve --aot"
   },
   "private": true,
   "dependencies": {
