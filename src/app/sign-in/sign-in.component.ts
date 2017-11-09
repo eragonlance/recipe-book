@@ -33,7 +33,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       }
       if (state === 1) {
         this.dialogRef.disableClose = true;
-        this.dialogRef.updateSize('250px');
+        this.dialogRef.updateSize('350px');
       }
       if (state === 2) {
         this.dialogRef.disableClose = false;

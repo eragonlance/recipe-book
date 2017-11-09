@@ -1,7 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "recipe-book"
+    "name": "recipe-book",
+    "ejected": true
   },
   "apps": [
     {
@@ -12,11 +13,22 @@
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.app.json",
       "prefix": "app",
       "styles": [
-        { "input": "themes/common.styl", "output": "css/common" },
-        { "input": "themes/light.styl", "output": "css/light" },
-        { "input": "themes/dark.styl", "lazy": true, "output": "css/dark" }
+        {
+          "input": "themes/common.styl",
+          "output": "css/common"
+        },
+        {
+          "input": "themes/light.styl",
+          "output": "css/light"
+        },
+        {
+          "input": "themes/dark.styl",
+          "lazy": true,
+          "output": "css/dark"
+        }
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
