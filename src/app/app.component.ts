@@ -15,6 +15,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if (!this.backendService.recipesFetched) {
+      this.backendService.recipesFetched = true;
       this.backendService
         .fetchRecipes()
         .subscribe((recipes: Recipe[]) => this.recipeService.setRecipes(recipes));

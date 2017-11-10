@@ -6,32 +6,7 @@ import { Recipe } from './recipe.model';
 
 @Injectable()
 export class RecipeService {
-  private recipes: Recipe[] = [
-    // new Recipe(
-    //   'Beef Stew',
-    //   'Just a test',
-    //   'http://www.seriouseats.com/images/2017/02/20170228-pressure-cooker-recipes-roundup-09.jpg',
-    //   [new Ingredient('Lean beef', 5), new Ingredient('Potatoes', 12)]
-    // ),
-    // new Recipe(
-    //   'Fondue',
-    //   'Fondue is a Swiss condiment of melted cheese served in a communal pot (caquelon or fondue pot) over a portable stove (réchaud) heated with a candle or spirit lamp, and eaten by dipping bread into the cheese using long-stemmed forks.',
-    //   'https://images-gmi-pmc.edge-generalmills.com/925f6a1e-d9f4-48ef-980f-344caa080558.jpg',
-    //   [new Ingredient('Cottage cheese', 20), new Ingredient('Bread', 35)]
-    // ),
-    // new Recipe(
-    //   'FondueA',
-    //   'Fondue is a Swiss condiment of melted cheese served in a communal pot (caquelon or fondue pot) over a portable stove (réchaud) heated with a candle or spirit lamp, and eaten by dipping bread into the cheese using long-stemmed forks.',
-    //   'https://images-gmi-pmc.edge-generalmills.com/925f6a1e-d9f4-48ef-980f-344caa080558.jpg',
-    //   [new Ingredient('Cottage cheese', 20), new Ingredient('Bread', 35)]
-    // ),
-    // new Recipe(
-    //   'FondueB',
-    //   'Fondue is a Swiss condiment of melted cheese served in a communal pot (caquelon or fondue pot) over a portable stove (réchaud) heated with a candle or spirit lamp, and eaten by dipping bread into the cheese using long-stemmed forks.',
-    //   'https://images-gmi-pmc.edge-generalmills.com/925f6a1e-d9f4-48ef-980f-344caa080558.jpg',
-    //   [new Ingredient('Cottage cheese', 20), new Ingredient('Bread', 35)]
-    // )
-  ];
+  private recipes: Recipe[] = [];
   recipesRefChanged = new Subject<void>();
 
   constructor(private shoppingService: ShoppingService) {}

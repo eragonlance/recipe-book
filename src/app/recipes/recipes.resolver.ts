@@ -13,8 +13,11 @@ export class RecipesResolver implements Resolve<Recipe[]> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Recipe[] | Observable<Recipe[]> | Promise<Recipe[]> {
-    return this.backendService.recipesFetched
-      ? this.recipeService.getRecipes()
-      : this.backendService.fetchRecipes();
+    if (!this.backendService.recipesFetched) {
+      this.backendService.recipesFetched = true;
+      return this.backendService.fetchRecipes();
+    }
+
+    return this.recipeService.getRecipes();
   }
 }

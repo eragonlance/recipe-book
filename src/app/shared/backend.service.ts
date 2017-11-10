@@ -27,9 +27,6 @@ export class BackendService {
           }
           return recipe;
         })
-      )
-      .do(() => {
-        this.recipesFetched = true;
-      });
+      );
   }
 }
