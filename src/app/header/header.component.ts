@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.signOut();
   }
 
-  onSaveData() {
+  onSaveRecipes() {
     this.matDialog
       .open(DialogComponent, {
         width: '350px',
@@ -74,13 +74,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
               }
             });
           } else {
-            this.backendService.saveRecipes(token).subscribe(
+            this.backendService.saveRecipes(token, this.recipeService.getRecipes()).subscribe(
               () => {
                 this.matDialog.open(DialogComponent, {
                   width: '350px',
                   data: {
                     title: 'Success',
-                    content: 'All changes have been saved to database',
+                    content: 'All changes have been saved to database.',
                     dialType: 'notice'
                   }
                 });
@@ -92,7 +92,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
-  onFetchData() {
+  onFetchRecipes() {
     this.backendService.fetchRecipes().subscribe(recipes => this.recipeService.setRecipes(recipes));
   }
 

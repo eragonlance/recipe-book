@@ -2,8 +2,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ShoppingService } from './../shopping.service';
 import { Utility } from './../shared/utilities';
 import { Ingredient } from './../shared/ingredient.model';
-import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-shopping-list',

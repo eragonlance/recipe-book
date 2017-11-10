@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { Recipe } from '../recipes/recipe.model';
-import { RecipeService } from '../recipes/recipe.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,12 +8,12 @@ import { HttpClient } from '@angular/common/http';
 export class BackendService {
   recipesFetched = false;
 
-  constructor(private http: HttpClient, private recipeService: RecipeService) {}
+  constructor(private http: HttpClient) {}
 
-  saveRecipes(token: string): Observable<Object> {
+  saveRecipes(token: string, recipes: Recipe[]): Observable<Object> {
     return this.http.put(
       'https://recipe-book-eragonlance.firebaseio.com/recipes.json?auth=' + token,
-      this.recipeService.getRecipes()
+      recipes
     );
   }
 

@@ -8,8 +8,8 @@
   <a mat-button *ngIf="isSignedIn" (click)="onSignOut()">Sign Out</a>
   <button mat-button role="button" [matMenuTriggerFor]="menu">Database</button>
   <mat-menu #menu>
-    <button mat-menu-item (click)="onSaveData()">Save recipes</button>
-    <button mat-menu-item (click)="onFetchData()">Fetch recipes</button>
+    <button mat-menu-item (click)="onSaveRecipes()">Save recipes</button>
+    <button mat-menu-item (click)="onFetchRecipes()">Fetch recipes</button>
   </mat-menu>
 </mat-toolbar>
 
