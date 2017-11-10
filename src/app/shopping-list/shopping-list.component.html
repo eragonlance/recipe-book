@@ -11,7 +11,7 @@
       <mat-form-field>
         <input matInput placeholder="Search" #filterInput (input)="filterString = filterInput.value">
       </mat-form-field>
-      <mat-nav-list style="max-height: 50vh; overflow: scroll">
+      <mat-nav-list style="max-height: 50vh; overflow: auto">
         <a mat-list-item *ngFor="let ing of ingredients | filter:filterString:'name'" [class.active]="ing === selectedIng"
           (click)="select(ing)">{{ ing.name }} ({{ ing.amount }})</a>
       </mat-nav-list>
