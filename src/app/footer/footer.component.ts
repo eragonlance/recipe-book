@@ -2,6 +2,7 @@ import { Utility } from './../shared/utilities';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatSlideToggleChange, MatSlideToggle } from '@angular/material';
 import { ChangeDetectorRef } from '@angular/core';
+import 'hammerjs'; //for material slide toggle gesture
 
 @Component({
   selector: 'app-footer',

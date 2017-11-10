@@ -95,8 +95,8 @@ module.exports = {
   },
   output: {
     path: path.join(process.cwd(), 'dist'),
-    filename: 'js/[name].bundle.js',
-    chunkFilename: 'js/[id].chunk.js',
+    filename: 'js/[name].[chunkhash].bundle.js',
+    chunkFilename: 'js/[id].[chunkhash].js',
     crossOriginLoading: false
   },
   module: {
@@ -109,7 +109,7 @@ module.exports = {
         test: /\.(eot|svg|cur)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]',
+          name: '[name].[hash].[ext]',
           limit: 10000
         }
       },
@@ -117,7 +117,7 @@ module.exports = {
         test: /\.(jpg|png|webp|gif|otf|ttf|woff|woff2|ani)$/,
         loader: 'url-loader',
         options: {
-          name: '[name].[ext]',
+          name: '[name].[hash].[ext]',
           limit: 10000
         }
       },
@@ -476,8 +476,7 @@ module.exports = {
     }),
     new HashedModuleIdsPlugin({
       hashFunction: 'md5',
-      hashDigest: 'base64',
-      hashDigestLength: 4
+      hashDigest: 'base64'
     }),
     new ModuleConcatenationPlugin({}),
     new UglifyJsPlugin({
