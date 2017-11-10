@@ -46,7 +46,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSignOut() {
-    this.authService.signOut();
+    this.matDialog
+      .open(DialogComponent, {
+        width: '250px',
+        data: {
+          title: 'Sign out',
+          content: 'Do you want to sign out?',
+          dialType: 'confirm'
+        }
+      })
+      .afterClosed()
+      .subscribe(res => {
+        if (res) this.authService.signOut();
+      });
   }
 
   onSaveRecipes() {
