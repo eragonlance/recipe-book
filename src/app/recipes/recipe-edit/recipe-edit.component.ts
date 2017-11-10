@@ -34,6 +34,44 @@ export class RecipeEditComponent implements OnInit {
     this.initForm();
   }
 
+  initForm() {
+    this.recipeForm = new FormGroup({
+      name: new FormControl(null, Validators.required),
+      imagePath: new FormControl(null, [Validators.required]),
+      description: new FormControl(null),
+      ingredients: new FormArray([])
+    });
+
+    if (this.isInEditMode) {
+      const recipe = this.route.snapshot.data['recipe'];
+
+      this.recipeForm.reset({
+        name: recipe.name,
+        imagePath: recipe.imagePath,
+        description: recipe.description
+      });
+
+      recipe.ingredients.forEach((ing: Ingredient) => {
+        this.ingredients.push(
+          new FormGroup({
+            name: new FormControl(ing.name, Validators.required),
+            amount: new FormControl(ing.amount, [
+              Validators.required,
+              CustomValidators.positiveNumber
+            ])
+          })
+        );
+      });
+    } else {
+      this.ingredients.push(
+        new FormGroup({
+          name: new FormControl(null, Validators.required),
+          amount: new FormControl(null, [Validators.required, CustomValidators.positiveNumber])
+        })
+      );
+    }
+  }
+
   onAddIng() {
     this.ingredients.push(
       new FormGroup({
@@ -87,46 +125,8 @@ export class RecipeEditComponent implements OnInit {
     return true;
   }
 
-  logPreviewError() {
-    console.warn('Cannot load image preview from URL');
-  }
-
-  private initForm() {
-    this.recipeForm = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      imagePath: new FormControl(null, [Validators.required]),
-      description: new FormControl(null),
-      ingredients: new FormArray([])
-    });
-
-    if (this.isInEditMode) {
-      const recipe = this.route.snapshot.data['recipe'];
-
-      this.recipeForm.reset({
-        name: recipe.name,
-        imagePath: recipe.imagePath,
-        description: recipe.description
-      });
-
-      recipe.ingredients.forEach((ing: Ingredient) => {
-        this.ingredients.push(
-          new FormGroup({
-            name: new FormControl(ing.name, Validators.required),
-            amount: new FormControl(ing.amount, [
-              Validators.required,
-              CustomValidators.positiveNumber
-            ])
-          })
-        );
-      });
-    } else {
-      this.ingredients.push(
-        new FormGroup({
-          name: new FormControl(null, Validators.required),
-          amount: new FormControl(null, [Validators.required, CustomValidators.positiveNumber])
-        })
-      );
-    }
+  testImageURL(): boolean {
+    return Utility.testURL(this.imagePath.value);
   }
 
   get name() {
