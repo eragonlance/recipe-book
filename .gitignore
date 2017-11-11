@@ -32,6 +32,8 @@
 npm-debug.log
 testem.log
 /typings
+firebase.json
+.firebaserc
 
 # e2e
 /e2e/*.js

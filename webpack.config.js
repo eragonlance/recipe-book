@@ -8,6 +8,8 @@ const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractTextPluginHash = new ExtractTextPlugin({ filename: '[name].[hash].bundle.css' });
+const extractTextPluginNoHash = new ExtractTextPlugin({ filename: '[name].bundle.css' });
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
@@ -106,22 +108,6 @@ module.exports = {
         loader: 'raw-loader'
       },
       {
-        test: /\.(eot|svg|cur)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[hash].[ext]',
-          limit: 10000
-        }
-      },
-      {
-        test: /\.(jpg|png|webp|gif|otf|ttf|woff|woff2|ani)$/,
-        loader: 'url-loader',
-        options: {
-          name: '[name].[hash].[ext]',
-          limit: 10000
-        }
-      },
-      {
         test: /\.js$/,
         use: [
           {
@@ -158,75 +144,7 @@ module.exports = {
         ]
       },
       {
-        exclude: [
-          path.join(process.cwd(), 'src\\themes\\common.styl'),
-          path.join(process.cwd(), 'src\\themes\\light.styl'),
-          path.join(process.cwd(), 'src\\themes\\dark.styl')
-        ],
-        test: /\.scss$|\.sass$/,
-        use: [
-          'exports-loader?module.exports.toString()',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: false,
-              importLoaders: 1
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: postcssPlugins
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: false,
-              precision: 8,
-              includePaths: []
-            }
-          }
-        ]
-      },
-      {
-        exclude: [
-          path.join(process.cwd(), 'src\\themes\\common.styl'),
-          path.join(process.cwd(), 'src\\themes\\light.styl'),
-          path.join(process.cwd(), 'src\\themes\\dark.styl')
-        ],
-        test: /\.less$/,
-        use: [
-          'exports-loader?module.exports.toString()',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: false,
-              importLoaders: 1
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: postcssPlugins
-            }
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: false
-            }
-          }
-        ]
-      },
-      {
-        exclude: [
-          path.join(process.cwd(), 'src\\themes\\common.styl'),
-          path.join(process.cwd(), 'src\\themes\\light.styl'),
-          path.join(process.cwd(), 'src\\themes\\dark.styl')
-        ],
+        exclude: [path.join(process.cwd(), 'src\\themes\\')],
         test: /\.styl$/,
         use: [
           'exports-loader?module.exports.toString()',
@@ -254,108 +172,8 @@ module.exports = {
         ]
       },
       {
-        include: [
-          path.join(process.cwd(), 'src\\themes\\common.styl'),
-          path.join(process.cwd(), 'src\\themes\\light.styl'),
-          path.join(process.cwd(), 'src\\themes\\dark.styl')
-        ],
-        test: /\.css$/,
-        loaders: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: false,
-                importLoaders: 1
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                plugins: postcssPlugins
-              }
-            }
-          ],
-          publicPath: ''
-        })
-      },
-      {
-        include: [
-          path.join(process.cwd(), 'src\\themes\\common.styl'),
-          path.join(process.cwd(), 'src\\themes\\light.styl'),
-          path.join(process.cwd(), 'src\\themes\\dark.styl')
-        ],
-        test: /\.scss$|\.sass$/,
-        loaders: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: false,
-                importLoaders: 1
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                plugins: postcssPlugins
-              }
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: false,
-                precision: 8,
-                includePaths: []
-              }
-            }
-          ],
-          publicPath: ''
-        })
-      },
-      {
-        include: [
-          path.join(process.cwd(), 'src\\themes\\common.styl'),
-          path.join(process.cwd(), 'src\\themes\\light.styl'),
-          path.join(process.cwd(), 'src\\themes\\dark.styl')
-        ],
-        test: /\.less$/,
-        loaders: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: false,
-                importLoaders: 1
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                plugins: postcssPlugins
-              }
-            },
-            {
-              loader: 'less-loader',
-              options: {
-                sourceMap: false
-              }
-            }
-          ],
-          publicPath: ''
-        })
-      },
-      {
-        include: [
-          path.join(process.cwd(), 'src\\themes\\common.styl'),
-          path.join(process.cwd(), 'src\\themes\\light.styl'),
-          path.join(process.cwd(), 'src\\themes\\dark.styl')
-        ],
-        test: /\.styl$/,
-        loaders: ExtractTextPlugin.extract({
+        include: [path.join(process.cwd(), 'src\\themes\\common.styl')],
+        loaders: extractTextPluginHash.extract({
           use: [
             {
               loader: 'css-loader',
@@ -378,8 +196,38 @@ module.exports = {
                 paths: []
               }
             }
-          ],
-          publicPath: ''
+          ]
+        })
+      },
+      {
+        include: [
+          path.join(process.cwd(), 'src\\themes\\light.styl'),
+          path.join(process.cwd(), 'src\\themes\\dark.styl')
+        ],
+        loaders: extractTextPluginNoHash.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: false,
+                importLoaders: 1
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: postcssPlugins
+              }
+            },
+            {
+              loader: 'stylus-loader',
+              options: {
+                sourceMap: false,
+                paths: []
+              }
+            }
+          ]
         })
       },
       {
@@ -467,9 +315,8 @@ module.exports = {
       minChunks: 2,
       async: 'common'
     }),
-    new ExtractTextPlugin({
-      filename: '[name].bundle.css'
-    }),
+    extractTextPluginHash,
+    extractTextPluginNoHash,
     new SuppressExtractedTextChunksWebpackPlugin(),
     new EnvironmentPlugin({
       NODE_ENV: 'production'
