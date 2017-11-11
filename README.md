@@ -1,5 +1,5 @@
 # Recipe Book
-An Angular practicing project.
+A simple SPA built with Angular 2+ for learning purposes. [Hosted at Firebase](https://recipe-book-eragonlance.firebaseapp.com "Recipe Book")
 ## To build
 ```
 yarn install
