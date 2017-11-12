@@ -33,6 +33,10 @@ export class AuthService {
       : new Promise<string>((resolve, reject) => resolve(''));
   }
 
+  getEmail(): string {
+    return this.currentUser.email;
+  }
+
   onAuthStateChanged(nextOrObserver: (a: firebase.User) => void): firebase.Unsubscribe {
     return this.auth.onAuthStateChanged(nextOrObserver);
   }

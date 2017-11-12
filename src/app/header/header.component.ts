@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         width: '350px',
         data: {
           title: 'Save recipes',
-          content: 'Do you want to save all changes to database?',
+          content: 'Do you want to save the current recipe list to database?',
           dialType: 'confirm'
         }
       })
@@ -89,10 +89,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
             this.backendService.saveRecipes(token, this.recipeService.getRecipes()).subscribe(
               () => {
                 this.matDialog.open(DialogComponent, {
-                  width: '350px',
+                  width: '300px',
                   data: {
                     title: 'Success',
-                    content: 'All changes have been saved to database.',
+                    content: 'Successfully saved to database.',
                     dialType: 'notice'
                   }
                 });
