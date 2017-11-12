@@ -32,7 +32,7 @@
             <input matInput placeholder="Amount" formControlName="amount">
             <mat-error *ngIf="ingControl.get('amount').hasError('positiveNumber')">Amount must be larger than 0</mat-error>
           </mat-form-field>
-          <span class="icon-delete" (click)="onRemoveIng(i)"></span>
+          <span *ngIf="ingredients.controls.length > 1" class="icon-delete" (click)="onRemoveIng(i)"></span>
           <br>
         </ng-container>
       </ng-container>
