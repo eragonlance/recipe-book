@@ -1,5 +1,5 @@
 import { DialogComponent } from './dialog/dialog.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { SignInComponent } from './account/sign-in.component';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ErrorComponent } from './error/error.component';

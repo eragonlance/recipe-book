@@ -5,7 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { RecipeService } from '../recipes/recipe.service';
 import { MatDialog } from '@angular/material';
-import { SignInComponent } from '../sign-in/sign-in.component';
+import { SignInComponent } from '../account/sign-in.component';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({

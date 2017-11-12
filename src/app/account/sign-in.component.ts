@@ -23,7 +23,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.f = new FormGroup({
       email: new FormControl(null, [Validators.email]),
       password: new FormControl(null, [CustomValidators.minChars(this.minPasswordLength)]),
-      remember: new FormControl(true)
+      remember: new FormControl(false)
     });
 
     this.stateSubject.subscribe((state: number) => {
