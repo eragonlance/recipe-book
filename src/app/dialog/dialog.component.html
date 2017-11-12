@@ -1,8 +1,8 @@
 <h2 mat-dialog-title *ngIf="data.title">{{ data.title }}</h2>
-<mat-dialog-content *ngIf="data.content">{{ data.content }}</mat-dialog-content>
+<mat-dialog-content *ngIf="data.content" [style.color]="danger? 'red':'initial'">{{ data.content }}</mat-dialog-content>
 <ng-container [ngSwitch]="dialType">
   <mat-dialog-actions *ngSwitchCase="'confirm'" align="center">
-    <button mat-button [mat-dialog-close]="true">Yes</button>
+    <button mat-button [color]="danger? 'warn':''" [mat-dialog-close]="true">Yes</button>
     <button mat-button mat-dialog-close>No</button>
   </mat-dialog-actions>
   <mat-dialog-actions *ngSwitchCase="'notice'" align="center">

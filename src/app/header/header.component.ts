@@ -105,7 +105,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onFetchRecipes() {
-    this.backendService.fetchRecipes().subscribe(recipes => this.recipeService.setRecipes(recipes));
+    this.matDialog
+      .open(DialogComponent, {
+        width: '350px',
+        data: {
+          title: 'Fetch recipes',
+          content:
+            'Your current recipe list will be completely replaced by the one fetched from database. Proceed?',
+          dialType: 'confirm',
+          danger: true
+        }
+      })
+      .afterClosed()
+      .subscribe(res => {
+        if (res)
+          this.backendService
+            .fetchRecipes()
+            .subscribe(recipes => this.recipeService.setRecipes(recipes));
+      });
   }
 
   ngOnDestroy() {
