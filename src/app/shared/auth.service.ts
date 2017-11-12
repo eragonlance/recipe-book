@@ -15,8 +15,12 @@ export class AuthService {
     return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  signInWithEmailAndPassword(email: string, password: string): Promise<any> {
-    return this.auth.signInWithEmailAndPassword(email, password);
+  signInWithEmailAndPassword(email: string, password: string, remember = true): Promise<any> {
+    return remember
+      ? this.auth.signInWithEmailAndPassword(email, password)
+      : this.auth
+          .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+          .then(() => this.auth.signInWithEmailAndPassword(email, password));
   }
 
   signOut(): Promise<any> {
@@ -24,8 +28,8 @@ export class AuthService {
   }
 
   getIdToken(): Promise<string> {
-    return this.auth.currentUser
-      ? this.auth.currentUser.getIdToken()
+    return this.currentUser
+      ? this.currentUser.getIdToken()
       : new Promise<string>((resolve, reject) => resolve(''));
   }
 
@@ -35,5 +39,8 @@ export class AuthService {
 
   private get auth() {
     return firebase.auth();
+  }
+  private get currentUser() {
+    return firebase.auth().currentUser;
   }
 }

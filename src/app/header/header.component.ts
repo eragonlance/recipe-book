@@ -16,7 +16,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class HeaderComponent implements OnInit, OnDestroy {
   headerTitle = '';
   headerTitleSub: Subscription;
-  isSignedIn = false;
+  isSignedIn: boolean;
 
   constructor(
     private backendService: BackendService,

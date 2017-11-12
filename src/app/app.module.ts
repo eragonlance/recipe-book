@@ -26,7 +26,8 @@ import {
   MatDialogModule,
   MatCardModule,
   MatInputModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 @NgModule({
@@ -52,7 +53,8 @@ import {
     AppRoutingModule,
     MatCardModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCheckboxModule
   ],
   providers: [RecipeService, ShoppingService, BackendService, AuthService],
   bootstrap: [AppComponent],

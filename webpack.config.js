@@ -340,10 +340,15 @@ module.exports = {
         ecma: 6,
         warnings: false,
         ie8: false,
-        mangle: true,
+        mangle: {
+          toplevel: true,
+          eval: true
+        },
         compress: {
           pure_getters: true,
-          passes: 1
+          passes: 1,
+          toplevel: true,
+          hoist_props: true
         }
       }
     }),

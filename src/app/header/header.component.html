@@ -4,8 +4,10 @@
   <a mat-button [routerLink]="['/recipes']">Recipes</a>
   <a mat-button [routerLink]="['/shopping-list']">Shopping list</a>
   <span style="flex: 1 1 auto"></span>
-  <a mat-button *ngIf="!isSignedIn" (click)="onSignIn()">Sign in/Sign up</a>
-  <a mat-button *ngIf="isSignedIn" (click)="onSignOut()">Sign Out</a>
+  <a mat-button *ngIf="!isSignedIn;else signOut" (click)="onSignIn()">Sign in/Sign up</a>
+  <ng-template #signOut>
+    <a mat-button (click)="onSignOut()">Sign Out</a>
+  </ng-template>
   <button mat-button role="button" [matMenuTriggerFor]="menu">Database</button>
   <mat-menu #menu>
     <button mat-menu-item (click)="onSaveRecipes()">Save recipes</button>

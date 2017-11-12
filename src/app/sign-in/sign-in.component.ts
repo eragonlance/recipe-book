@@ -22,7 +22,8 @@ export class SignInComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.f = new FormGroup({
       email: new FormControl(null, [Validators.email]),
-      password: new FormControl(null, [CustomValidators.minChars(this.minPasswordLength)])
+      password: new FormControl(null, [CustomValidators.minChars(this.minPasswordLength)]),
+      remember: new FormControl(true)
     });
 
     this.stateSubject.subscribe((state: number) => {
@@ -49,15 +50,17 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.stateSubject.next(1);
     this.message = 'Logging in...';
 
-    this.authService.signInWithEmailAndPassword(this.email.value, this.password.value).then(
-      () => {
-        this.dialogRef.close();
-      },
-      err => {
-        this.stateSubject.next(2);
-        this.setErrorMessage(err);
-      }
-    );
+    this.authService
+      .signInWithEmailAndPassword(this.email.value, this.password.value, this.remember.value)
+      .then(
+        () => {
+          this.dialogRef.close();
+        },
+        err => {
+          this.stateSubject.next(2);
+          this.setErrorMessage(err);
+        }
+      );
   }
 
   signUp() {
@@ -113,5 +116,8 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
   get password() {
     return this.f.get('password');
+  }
+  get remember() {
+    return this.f.get('remember');
   }
 }
