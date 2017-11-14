@@ -120,7 +120,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         if (res)
           this.backendService
-            .fetchRecipes()
+            .fetchRecipes(true)
             .subscribe(recipes => this.recipeService.setRecipes(recipes));
       });
   }

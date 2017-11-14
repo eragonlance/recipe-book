@@ -115,6 +115,8 @@ export class RecipeEditComponent implements OnInit {
   }
 
   canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
+    if (!this.recipeIdIsValid) return true;
+
     if (!this.isSubmitted && this.recipeForm.dirty) {
       const dialogRef = this.matDialog.open(DialogComponent, {
         width: '250px',
@@ -125,6 +127,7 @@ export class RecipeEditComponent implements OnInit {
       });
       return dialogRef.afterClosed().map(res => (res ? true : false));
     }
+
     return true;
   }
 
