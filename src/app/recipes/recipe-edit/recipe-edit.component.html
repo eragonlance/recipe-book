@@ -1,4 +1,5 @@
-<form [formGroup]="recipeForm" (submit)="onSubmit()">
+<form *ngIf="recipeIdIsValid || !isInEditMode; else notFound" [formGroup]="recipeForm"
+  (submit)="onSubmit()">
   <button mat-raised-button color="primary" type="submit">Save</button>
   <button mat-raised-button color="warn" type="button" [routerLink]="['../']">Cancel</button>
 
@@ -44,3 +45,6 @@
     </ng-container>
   </mat-card>
 </form>
+<ng-template #notFound>
+  <h1 style="text-align: center">Recipe not found</h1>
+</ng-template>

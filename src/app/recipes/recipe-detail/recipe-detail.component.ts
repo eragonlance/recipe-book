@@ -1,4 +1,4 @@
-import { ActivatedRoute, Data, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from './../recipe.service';
 import { Recipe } from './../recipe.model';
 import { Component, OnInit } from '@angular/core';
@@ -21,8 +21,8 @@ export class RecipeDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((data: Data) => {
-      this.recipe = data['recipe'];
+    this.route.params.subscribe(params => {
+      this.recipe = this.recipeService.getRecipe(+params['id']);
     });
   }
 

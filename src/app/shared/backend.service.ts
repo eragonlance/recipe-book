@@ -6,9 +6,11 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class BackendService {
-  recipesFetched = false;
+  private prefetchedRecipes: Observable<Recipe[]>;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.fetchRecipes(true);
+  }
 
   saveRecipes(token: string, recipes: Recipe[]): Observable<Object> {
     return this.http.put(
@@ -17,16 +19,21 @@ export class BackendService {
     );
   }
 
-  fetchRecipes(): Observable<Recipe[]> {
-    return this.http
-      .get<Recipe[]>('https://recipe-book-eragonlance.firebaseio.com/recipes.json')
-      .map(recipes =>
-        recipes.map(recipe => {
-          if (!recipe['ingredients']) {
-            recipe['ingredients'] = [];
-          }
-          return recipe;
-        })
-      );
+  fetchRecipes(refresh = false): Observable<Recipe[]> {
+    if (refresh) {
+      this.prefetchedRecipes = this.http
+        .get<Recipe[]>('https://recipe-book-eragonlance.firebaseio.com/recipes.json')
+        .map(recipes =>
+          recipes.map(recipe => {
+            if (!recipe['ingredients']) {
+              recipe['ingredients'] = [];
+            }
+            return recipe;
+          })
+        )
+        .publishLast()
+        .refCount();
+    }
+    return this.prefetchedRecipes;
   }
 }

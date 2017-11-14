@@ -5,7 +5,7 @@ import { RecipeService } from './../recipe.service';
 import { Ingredient } from './../../shared/ingredient.model';
 import { CustomValidators } from './../../shared/custom-validators';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, Data } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DialogComponent } from '../../dialog/dialog.component';
 
@@ -15,9 +15,9 @@ import { DialogComponent } from '../../dialog/dialog.component';
   styleUrls: ['./recipe-edit.component.styl']
 })
 export class RecipeEditComponent implements OnInit {
+  recipeIdIsValid: boolean;
   isInEditMode: boolean;
   isSubmitted = false;
-  imgIsLoaded = false;
   recipeForm: FormGroup;
 
   constructor(
@@ -28,10 +28,13 @@ export class RecipeEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((data: Data) => {
-      this.isInEditMode = !!data['recipe'];
-    });
-    this.initForm();
+    const id = this.route.snapshot.params['id'];
+    this.isInEditMode = !!id;
+    this.recipeIdIsValid = !!this.recipeService.getRecipe(+id);
+
+    if (this.recipeIdIsValid || !this.isInEditMode) {
+      this.initForm();
+    }
   }
 
   initForm() {
@@ -43,7 +46,7 @@ export class RecipeEditComponent implements OnInit {
     });
 
     if (this.isInEditMode) {
-      const recipe = this.route.snapshot.data['recipe'];
+      const recipe = this.recipeService.getRecipe(+this.route.snapshot.params['id']);
 
       this.recipeForm.reset({
         name: recipe.name,
