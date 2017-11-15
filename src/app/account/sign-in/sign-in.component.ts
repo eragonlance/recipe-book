@@ -1,19 +1,17 @@
 import { AuthService } from '../../shared/auth.service';
 import { CustomValidators } from '../../shared/custom-validators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.styl']
 })
-export class SignInComponent implements OnInit, OnDestroy {
+export class SignInComponent implements OnInit {
   f: FormGroup;
-  stateSubject = new Subject<number>();
-  state = 0;
+  state: 'init' | 'pending' | 'error';
   minPasswordLength = 6;
   message = '';
 
@@ -26,21 +24,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       remember: new FormControl(false)
     });
 
-    this.stateSubject.subscribe((state: number) => {
-      this.state = state;
-      if (state === 0) {
-        this.dialogRef.disableClose = false;
-        this.dialogRef.updateSize('500px');
-      }
-      if (state === 1) {
-        this.dialogRef.disableClose = true;
-        this.dialogRef.updateSize('250px');
-      }
-      if (state === 2) {
-        this.dialogRef.disableClose = false;
-        this.dialogRef.updateSize('350px');
-      }
-    });
+    this.setState('init');
   }
 
   signIn() {
@@ -48,20 +32,16 @@ export class SignInComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.stateSubject.next(1);
+    this.setState('pending');
     this.message = 'Logging in...';
 
     this.authService
       .signInWithEmailAndPassword(this.email.value, this.password.value, this.remember.value)
-      .then(
-        () => {
-          this.dialogRef.close();
-        },
-        err => {
-          this.stateSubject.next(2);
-          this.setErrorMessage(err);
-        }
-      );
+      .then(() => this.dialogRef.close())
+      .catch(err => {
+        this.setState('error');
+        this.setErrorMessage(err);
+      });
   }
 
   signUp() {
@@ -69,33 +49,27 @@ export class SignInComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.stateSubject.next(1);
+    this.setState('pending');
     this.message = 'Signing up...';
 
-    this.authService.createUserWithEmailAndPassword(this.email.value, this.password.value).then(
-      () => {
+    this.authService
+      .createUserWithEmailAndPassword(this.email.value, this.password.value)
+      .then(() => {
         this.message = 'Sign up succeeded. Automatically logging in...';
-
-        this.authService.signInWithEmailAndPassword(this.email.value, this.password.value).then(
-          () => this.dialogRef.close(),
-          err => {
-            this.stateSubject.next(2);
-            this.setErrorMessage(err);
-          }
-        );
-      },
-      err => {
-        this.stateSubject.next(2);
+        return this.authService.signInWithEmailAndPassword(this.email.value, this.password.value);
+      })
+      .then(() => this.dialogRef.close())
+      .catch(err => {
+        this.setState('error');
         this.setErrorMessage(err);
-      }
-    );
+      });
   }
 
   onReturn() {
-    this.stateSubject.next(0);
+    this.setState('init');
   }
 
-  setErrorMessage(error: { code: string; message: string }) {
+  private setErrorMessage(error: { code: string; message: string }) {
     switch (error.code) {
       case 'auth/wrong-password':
         this.message = 'The password for ' + this.email.value + ' is incorrect.';
@@ -108,8 +82,23 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.stateSubject.unsubscribe();
+  private setState(state: 'init' | 'pending' | 'error') {
+    this.state = state;
+
+    switch (state) {
+      case 'init':
+        this.dialogRef.disableClose = false;
+        this.dialogRef.updateSize('500px');
+        break;
+      case 'pending':
+        this.dialogRef.disableClose = true;
+        this.dialogRef.updateSize('250px');
+        break;
+      case 'error':
+        this.dialogRef.disableClose = false;
+        this.dialogRef.updateSize('350px');
+        break;
+    }
   }
 
   get email() {

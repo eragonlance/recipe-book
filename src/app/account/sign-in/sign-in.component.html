@@ -1,5 +1,5 @@
 <ng-container [ngSwitch]="state">
-  <form [formGroup]="f" *ngSwitchCase="0" (ngSubmit)="null">
+  <form [formGroup]="f" *ngSwitchCase="'init'" (ngSubmit)="null">
     <mat-form-field class="full-width">
       <input matInput type="text" placeholder="Email" formControlName="email">
       <mat-error *ngIf="email.hasError('email')">Invalid email</mat-error>
@@ -14,12 +14,12 @@
     <button mat-raised-button color="primary" type="submit" (click)="signUp()">Sign up</button>
   </form>
 
-  <ng-container *ngSwitchCase="1">
+  <ng-container *ngSwitchCase="'pending'">
     <mat-dialog-content align="center">{{ message }}</mat-dialog-content>
     <mat-spinner [diameter]="40" [strokeWidth]="4" style="margin: 20px auto 0"></mat-spinner>
   </ng-container>
 
-  <ng-container *ngSwitchCase="2">
+  <ng-container *ngSwitchCase="'error'">
     <h2 mat-dialog-title>Error</h2>
     <mat-dialog-content>{{ message }}</mat-dialog-content>
     <mat-dialog-actions align="center">

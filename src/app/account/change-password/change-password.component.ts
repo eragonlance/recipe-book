@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs/Subject';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
@@ -12,8 +11,7 @@ import { MatDialogRef } from '@angular/material';
 })
 export class ChangePasswordComponent implements OnInit {
   f: FormGroup;
-  stateSubject = new Subject<number>();
-  state = 0;
+  state: 'init' | 'pending' | 'error';
   minPasswordLength = 6;
   message = '';
 
@@ -28,28 +26,14 @@ export class ChangePasswordComponent implements OnInit {
       newPassword: new FormControl(null, [CustomValidators.minChars(this.minPasswordLength)])
     });
 
-    this.stateSubject.subscribe((state: number) => {
-      this.state = state;
-      if (state === 0) {
-        this.dialogRef.disableClose = false;
-        this.dialogRef.updateSize('400px');
-      }
-      if (state === 1) {
-        this.dialogRef.disableClose = true;
-        this.dialogRef.updateSize('250px');
-      }
-      if (state === 2) {
-        this.dialogRef.disableClose = false;
-        this.dialogRef.updateSize('250px');
-      }
-    });
+    this.setState('init');
   }
 
   onSubmit() {
     if (this.f.invalid) return;
 
     this.message = 'Changing password...';
-    this.stateSubject.next(1);
+    this.setState('pending');
 
     this.authService
       .reAuthenticate(this.currentPassword.value)
@@ -57,12 +41,32 @@ export class ChangePasswordComponent implements OnInit {
       .then(() => this.dialogRef.close(true))
       .catch(err => {
         this.message = err.code === 'auth/wrong-password' ? 'Wrong current password.' : err.message;
-        this.stateSubject.next(2);
+        this.setState('error');
       });
   }
 
   onReturn() {
-    this.stateSubject.next(0);
+    this.setState('init');
+    this.f.reset();
+  }
+
+  private setState(state: 'init' | 'pending' | 'error') {
+    this.state = state;
+
+    switch (state) {
+      case 'init':
+        this.dialogRef.disableClose = false;
+        this.dialogRef.updateSize('400px');
+        break;
+      case 'pending':
+        this.dialogRef.disableClose = true;
+        this.dialogRef.updateSize('250px');
+        break;
+      case 'error':
+        this.dialogRef.disableClose = false;
+        this.dialogRef.updateSize('250px');
+        break;
+    }
   }
 
   get currentPassword() {
