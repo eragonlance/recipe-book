@@ -1,3 +1,4 @@
+import { ChangePasswordComponent } from './../account/change-password/change-password.component';
 import { AuthService } from './../shared/auth.service';
 import { BackendService } from '../shared/backend.service';
 import { Utility } from './../shared/utilities';
@@ -5,7 +6,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { RecipeService } from '../recipes/recipe.service';
 import { MatDialog } from '@angular/material';
-import { SignInComponent } from '../account/sign-in.component';
+import { SignInComponent } from '../account/sign-in/sign-in.component';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSignIn() {
     this.matDialog.open(SignInComponent, {
-      width: '600px'
+      width: '500px'
     });
   }
 
@@ -52,13 +53,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
         data: {
           title: 'Sign out',
           content: 'Do you want to sign out?',
-          dialType: 'confirm'
+          type: 'confirm'
         }
       })
       .afterClosed()
       .subscribe(res => {
         if (res) this.authService.signOut();
       });
+  }
+
+  onChangePassword() {
+    const dialogRef = this.matDialog.open(ChangePasswordComponent, {
+      width: '400px'
+    });
+    dialogRef.afterClosed().subscribe((success: boolean) => {
+      if (success) {
+        this.matDialog.open(DialogComponent, {
+          width: '300px',
+          data: {
+            title: 'Success',
+            content: 'Password is successfully changed.',
+            type: 'alert'
+          }
+        });
+      }
+    });
   }
 
   onSaveRecipes() {
@@ -68,7 +87,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         data: {
           title: 'Save recipes',
           content: 'Do you want to save the current recipe list to database?',
-          dialType: 'confirm'
+          type: 'confirm'
         }
       })
       .afterClosed()
@@ -82,7 +101,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               data: {
                 title: 'Unauthorized',
                 content: 'Only signed in users are allowed to save to database.',
-                dialType: 'notice'
+                type: 'alert'
               }
             });
           } else {
@@ -93,7 +112,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                   data: {
                     title: 'Success',
                     content: 'Successfully saved to database.',
-                    dialType: 'notice'
+                    type: 'alert'
                   }
                 });
               },
@@ -112,7 +131,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           title: 'Fetch recipes',
           content:
             'Your current recipe list will be completely replaced by the one fetched from database. Proceed?',
-          dialType: 'confirm',
+          type: 'confirm',
           danger: true
         }
       })

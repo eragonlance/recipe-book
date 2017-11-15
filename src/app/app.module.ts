@@ -1,5 +1,6 @@
+import { ChangePasswordComponent } from './account/change-password/change-password.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { SignInComponent } from './account/sign-in.component';
+import { SignInComponent } from './account/sign-in/sign-in.component';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ErrorComponent } from './error/error.component';
@@ -38,7 +39,8 @@ import {
     HomeComponent,
     FooterComponent,
     SignInComponent,
-    DialogComponent
+    DialogComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,6 @@ import {
   ],
   providers: [RecipeService, ShoppingService, BackendService, AuthService],
   bootstrap: [AppComponent],
-  entryComponents: [SignInComponent, DialogComponent]
+  entryComponents: [SignInComponent, DialogComponent, ChangePasswordComponent]
 })
 export class AppModule {}

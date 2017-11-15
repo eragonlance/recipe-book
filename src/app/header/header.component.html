@@ -15,7 +15,7 @@
   <ng-template #account>
     <button mat-button [matMenuTriggerFor]="accountMenu">Account</button>
     <mat-menu #accountMenu>
-      <button mat-menu-item>Change password</button>
+      <button mat-menu-item (click)="onChangePassword()">Change password</button>
       <button mat-menu-item (click)="onSignOut()">Sign out</button>
     </mat-menu>
   </ng-template>

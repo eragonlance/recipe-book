@@ -1,5 +1,5 @@
 <form *ngIf="recipeIdIsValid || !isInEditMode; else notFound" [formGroup]="recipeForm"
-  (submit)="onSubmit()">
+  (ngSubmit)="onSubmit()">
   <button mat-raised-button color="primary" type="submit">Save</button>
   <button mat-raised-button color="warn" type="button" [routerLink]="['../']">Cancel</button>
 

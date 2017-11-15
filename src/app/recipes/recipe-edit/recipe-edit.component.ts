@@ -98,7 +98,7 @@ export class RecipeEditComponent implements OnInit {
         data: {
           title: 'Invalid form',
           content: 'Please recheck form for errors',
-          dialType: 'notice'
+          type: 'alert'
         }
       });
       return;

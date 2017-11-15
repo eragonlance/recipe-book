@@ -27,6 +27,16 @@ export class AuthService {
     return this.auth.signOut();
   }
 
+  reAuthenticate(password: string): Promise<any> {
+    return this.currentUser.reauthenticateWithCredential(
+      firebase.auth.EmailAuthProvider.credential(this.currentUser.email, password)
+    );
+  }
+
+  changePassword(newPassword): Promise<any> {
+    return this.currentUser.updatePassword(newPassword);
+  }
+
   getIdToken(): Promise<string> {
     return this.currentUser
       ? this.currentUser.getIdToken()

@@ -1,5 +1,5 @@
-import { AuthService } from './../shared/auth.service';
-import { CustomValidators } from './../shared/custom-validators';
+import { AuthService } from '../../shared/auth.service';
+import { CustomValidators } from '../../shared/custom-validators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
@@ -30,14 +30,15 @@ export class SignInComponent implements OnInit, OnDestroy {
       this.state = state;
       if (state === 0) {
         this.dialogRef.disableClose = false;
-        this.dialogRef.updateSize('600px');
+        this.dialogRef.updateSize('500px');
       }
       if (state === 1) {
         this.dialogRef.disableClose = true;
-        this.dialogRef.updateSize('350px');
+        this.dialogRef.updateSize('250px');
       }
       if (state === 2) {
         this.dialogRef.disableClose = false;
+        this.dialogRef.updateSize('350px');
       }
     });
   }
