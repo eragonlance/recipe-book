@@ -93,14 +93,6 @@ export class RecipeEditComponent implements OnInit {
 
   onSubmit() {
     if (!this.recipeForm.valid) {
-      this.matDialog.open(DialogComponent, {
-        width: '250px',
-        data: {
-          title: 'Invalid form',
-          content: 'Please recheck form for errors',
-          type: 'alert'
-        }
-      });
       return;
     }
 
