@@ -7,13 +7,15 @@
     <button mat-menu-item (click)="onDeleteRcipe()">Delete recipe</button>
   </mat-menu>
   <mat-card style="margin-top: 10px">
-    <h2>{{ recipe.name }}</h2>
     <img [src]="recipe.imagePath" style="height: 200px">
+    <h2>{{ recipe.name }}</h2>
     <mat-card-content>{{ recipe.description }}</mat-card-content>
-    <h2>Ingredients</h2>
-    <mat-list>
-      <mat-list-item *ngFor="let item of recipe.ingredients">{{ item.name }} ({{ item.amount }})</mat-list-item>
-    </mat-list>
+    <h3 style="font-weight: 500">Ingredients</h3>
+    <ul>
+      <li *ngFor="let item of recipe.ingredients">
+        <h4>{{ item.name }} ({{ item.amount }})</h4>
+      </li>
+    </ul>
   </mat-card>
 </ng-container>
 <ng-template #notFound>
