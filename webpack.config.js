@@ -28,51 +28,40 @@ const { AngularCompilerPlugin } = require('@ngtools/webpack');
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
 const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
-const entryPoints = [
-  'inline',
-  'polyfills',
-  'sw-register',
-  'css/common',
-  'css/light',
-  'css/dark',
-  'vendor',
-  'main'
-];
-const minimizeCss = true;
+const entryPoints = ['inline', 'polyfills', 'css/common', 'css/light', 'css/dark', 'main'];
 const baseHref = '';
 const deployUrl = '';
 const postcssPlugins = function() {
-  // safe settings based on: https://github.com/ben-eb/cssnano/issues/358#issuecomment-283696193
-  const importantCommentRe = /@preserve|@license|[@#]\s*source(?:Mapping)?URL|^!/i;
   const minimizeOptions = {
-    autoprefixer: false,
-    safe: true,
-    mergeLonghand: false,
-    discardComments: { remove: comment => !importantCommentRe.test(comment) }
+    autoprefixer: false
   };
   return [
     postcssUrl({
       url: URL => {
+        const { url } = URL;
         // Only convert root relative URLs, which CSS-Loader won't process into require().
-        if (!URL.url.startsWith('/') || URL.url.startsWith('//')) {
+        if (!url.startsWith('/') || url.startsWith('//')) {
           return URL.url;
         }
         if (deployUrl.match(/:\/\//)) {
           // If deployUrl contains a scheme, ignore baseHref use deployUrl as is.
-          return `${deployUrl.replace(/\/$/, '')}${URL.url}`;
+          return `${deployUrl.replace(/\/$/, '')}${url}`;
         } else if (baseHref.match(/:\/\//)) {
           // If baseHref contains a scheme, include it as is.
-          return baseHref.replace(/\/$/, '') + `/${deployUrl}/${URL.url}`.replace(/\/\/+/g, '/');
+          return baseHref.replace(/\/$/, '') + `/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
         } else {
           // Join together base-href, deploy-url and the original URL.
           // Also dedupe multiple slashes into single ones.
-          return `/${baseHref}/${deployUrl}/${URL.url}`.replace(/\/\/+/g, '/');
+          return `/${baseHref}/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
         }
       }
     }),
-    autoprefixer(),
-    customProperties({ preserve: true })
-  ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
+    autoprefixer({
+      flexbox: false
+    }),
+    customProperties({ preserve: true }),
+    cssnano(minimizeOptions)
+  ];
 };
 
 module.exports = {
