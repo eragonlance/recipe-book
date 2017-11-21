@@ -1,7 +1,8 @@
 <button mat-raised-button color="primary" [routerLink]="['new']">New Recipe</button>
 <mat-card style="margin-top: 10px;">
   <mat-nav-list>
-    <a mat-list-item *ngFor="let recipe of recipes; let i = index" [routerLink]="i" routerLinkActive='active'>
+    <a mat-list-item *ngFor="let recipe of recipes; let i = index" [routerLink]="i" routerLinkActive="active"
+      #rla="routerLinkActive" [style.backgroundColor]="rla.isActive? themeSwitcherService.getAccentColor():'unset'">
       <img matListAvatar [src]="recipe.imagePath" alt="">
       <h2 matLine>{{ recipe.name }}</h2>
       <p matLine>{{ recipe.description }}</p>

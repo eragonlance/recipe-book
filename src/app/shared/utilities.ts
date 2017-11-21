@@ -26,8 +26,6 @@ export class Utility {
     'i'
   );
   static headerTitle = new Subject<string>();
-  static primaryColor = '#673ab7';
-  static accentColor = '#ffd740';
 
   /** Generate a random integer*/
   static numRand(min: number = 0, max: number = 9): number {

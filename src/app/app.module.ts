@@ -13,6 +13,7 @@ import { BackendService } from './shared/backend.service';
 import { RecipeService } from './recipes/recipe.service';
 import { ShoppingService } from './shopping.service';
 import { AuthService } from './shared/auth.service';
+import { ThemeSwitcherService } from './shared/theme-switcher.service';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -58,7 +59,7 @@ import {
     MatProgressSpinnerModule,
     MatCheckboxModule
   ],
-  providers: [RecipeService, ShoppingService, BackendService, AuthService],
+  providers: [RecipeService, ShoppingService, BackendService, AuthService, ThemeSwitcherService],
   bootstrap: [AppComponent],
   entryComponents: [SignInComponent, DialogComponent, ChangePasswordComponent]
 })

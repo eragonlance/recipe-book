@@ -20,13 +20,13 @@
           "output": "css/common"
         },
         {
-          "input": "themes/light.styl",
-          "output": "css/light"
+          "input": "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+          "output": "css/deeppurpleAmber"
         },
         {
-          "input": "themes/dark.styl",
+          "input": "../node_modules/@angular/material/prebuilt-themes/purple-green.css",
           "lazy": true,
-          "output": "css/dark"
+          "output": "css/purpleGreen"
         }
       ],
       "scripts": [],

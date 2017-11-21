@@ -1,3 +1,4 @@
+import { ThemeSwitcherService } from './../shared/theme-switcher.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ShoppingService } from './../shopping.service';
 import { Utility } from './../shared/utilities';
@@ -15,7 +16,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   filterString = '';
   private listChangedSub: Subscription;
 
-  constructor(public shoppingService: ShoppingService) {}
+  constructor(
+    public shoppingService: ShoppingService,
+    public themeSwitcherService: ThemeSwitcherService
+  ) {}
 
   ngOnInit() {
     Utility.headerTitle.next('Shopping list');

@@ -1,4 +1,5 @@
 import { Utility } from './../../shared/utilities';
+import { ThemeSwitcherService } from './../../shared/theme-switcher.service';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { RecipeService } from './../recipe.service';
@@ -24,7 +25,8 @@ export class RecipeEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private recipeService: RecipeService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    public themeSwitcherService: ThemeSwitcherService
   ) {}
 
   ngOnInit() {
@@ -138,8 +140,5 @@ export class RecipeEditComponent implements OnInit {
   }
   get ingredients(): FormArray {
     return <FormArray>this.recipeForm.get('ingredients');
-  }
-  get accent(): string {
-    return Utility.accentColor;
   }
 }

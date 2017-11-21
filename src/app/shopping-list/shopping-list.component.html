@@ -13,6 +13,7 @@
       </mat-form-field>
       <mat-nav-list style="max-height: 50vh; overflow: auto">
         <a mat-list-item *ngFor="let ing of ingredients | filter:filterString:'name'" [class.active]="ing === selectedIng"
+          [style.backgroundColor]="ing === selectedIng? themeSwitcherService.getAccentColor():'unset'"
           (click)="select(ing)">{{ ing.name }} ({{ ing.amount }})</a>
       </mat-nav-list>
     </mat-card>

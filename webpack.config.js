@@ -28,13 +28,17 @@ const { AngularCompilerPlugin } = require('@ngtools/webpack');
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
 const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
-const entryPoints = ['inline', 'polyfills', 'css/common', 'css/light', 'css/dark', 'main'];
+const entryPoints = [
+  'inline',
+  'polyfills',
+  'css/common',
+  'css/deeppurpleAmber',
+  'css/purpleGreen',
+  'main'
+];
 const baseHref = '';
 const deployUrl = '';
 const postcssPlugins = function() {
-  const minimizeOptions = {
-    autoprefixer: false
-  };
   return [
     postcssUrl({
       url: URL => {
@@ -60,7 +64,7 @@ const postcssPlugins = function() {
       flexbox: false
     }),
     customProperties({ preserve: true }),
-    cssnano(minimizeOptions)
+    cssnano()
   ];
 };
 
@@ -78,11 +82,13 @@ module.exports = {
     modules: ['./node_modules', './node_modules']
   },
   entry: {
-    main: ['./src\\main.ts'],
-    polyfills: ['./src\\polyfills.ts'],
-    'css/common': ['./src\\themes\\common.styl'],
-    'css/light': ['./src\\themes\\light.styl'],
-    'css/dark': ['./src\\themes\\dark.styl']
+    main: ['./src/main.ts'],
+    polyfills: ['./src/polyfills.ts'],
+    'css/common': ['./src/themes/common.styl'],
+    'css/deeppurpleAmber': [
+      './node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css'
+    ],
+    'css/purpleGreen': ['./node_modules/@angular/material/prebuilt-themes/purple-green.css']
   },
   output: {
     path: path.join(process.cwd(), 'dist'),
@@ -109,9 +115,15 @@ module.exports = {
       },
       {
         exclude: [
-          path.join(process.cwd(), 'src\\themes\\common.styl'),
-          path.join(process.cwd(), 'src\\themes\\light.styl'),
-          path.join(process.cwd(), 'src\\themes\\dark.styl')
+          path.join(process.cwd(), 'src/themes/common.styl'),
+          path.join(
+            process.cwd(),
+            'node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css'
+          ),
+          path.join(
+            process.cwd(),
+            'node_modules/@angular/material/prebuilt-themes/purple-green.css'
+          )
         ],
         test: /\.css$/,
         use: [
@@ -133,7 +145,7 @@ module.exports = {
         ]
       },
       {
-        exclude: [path.join(process.cwd(), 'src\\themes\\')],
+        exclude: [path.join(process.cwd(), 'src/themes/')],
         test: /\.styl$/,
         use: [
           'exports-loader?module.exports.toString()',
@@ -161,7 +173,7 @@ module.exports = {
         ]
       },
       {
-        include: [path.join(process.cwd(), 'src\\themes\\common.styl')],
+        include: [path.join(process.cwd(), 'src/themes/common.styl')],
         loaders: extractTextPluginHash.extract({
           use: [
             {
@@ -190,8 +202,14 @@ module.exports = {
       },
       {
         include: [
-          path.join(process.cwd(), 'src\\themes\\light.styl'),
-          path.join(process.cwd(), 'src\\themes\\dark.styl')
+          path.join(
+            process.cwd(),
+            'node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css'
+          ),
+          path.join(
+            process.cwd(),
+            'node_modules/@angular/material/prebuilt-themes/purple-green.css'
+          )
         ],
         loaders: extractTextPluginNoHash.extract({
           use: [
@@ -207,13 +225,6 @@ module.exports = {
               options: {
                 ident: 'postcss',
                 plugins: postcssPlugins
-              }
-            },
-            {
-              loader: 'stylus-loader',
-              options: {
-                sourceMap: false,
-                paths: []
               }
             }
           ]
@@ -279,7 +290,7 @@ module.exports = {
       cache: true,
       showErrors: true,
       chunks: 'all',
-      excludeChunks: ['css/dark'],
+      excludeChunks: ['css/purpleGreen', 'css/deeppurpleAmber'],
       title: 'Webpack App',
       xhtml: true,
       chunksSortMode: function sort(left, right) {
