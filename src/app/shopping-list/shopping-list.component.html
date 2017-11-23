@@ -14,7 +14,7 @@
       <div style="max-height: 50vh; overflow: auto">
         <div class="list-item" *ngFor="let ing of ingredients | filter:filterString:'name'"
           [class.active]="ing === selectedIng" [style.backgroundColor]="ing === selectedIng? themeSwitcherService.getAccentColor():'unset'"
-          (click)="onSelect(ing)" @removeAni>
+          (click)="onSelect(ing)" @enterLeave>
           <span>{{ ing.name }} ({{ ing.amount }})</span>
           <span class="icon-delete" style="margin-left: 20px" *ngIf="ing === selectedIng" (click)="onDelete(ing)"></span>
         </div>

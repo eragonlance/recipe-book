@@ -4,11 +4,13 @@ import { ShoppingService } from './../shopping.service';
 import { Utility } from './../shared/utilities';
 import { Ingredient } from './../shared/ingredient.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { enterLeave } from '../shared/animations';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.styl']
+  styleUrls: ['./shopping-list.component.styl'],
+  animations: [enterLeave]
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[];
@@ -30,9 +32,13 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     });
   }
 
-  select(ing: Ingredient) {
+  onSelect(ing: Ingredient) {
     this.selectedIng = this.selectedIng === ing ? null : ing;
     this.shoppingService.selectedIng.next(this.selectedIng);
+  }
+
+  onDelete(ing: Ingredient) {
+    this.shoppingService.removeIng(this.selectedIng);
   }
 
   ngOnDestroy() {

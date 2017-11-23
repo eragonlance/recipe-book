@@ -9,11 +9,13 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DialogComponent } from '../../dialog/dialog.component';
+import { enterLeave } from '../../shared/animations';
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.styl']
+  styleUrls: ['./recipe-edit.component.styl'],
+  animations: [enterLeave]
 })
 export class RecipeEditComponent implements OnInit {
   recipeIdIsValid: boolean;
