@@ -346,7 +346,7 @@ module.exports = {
         },
         compress: {
           pure_getters: true,
-          passes: 1,
+          passes: 3,
           toplevel: true,
           hoist_props: true
         }
