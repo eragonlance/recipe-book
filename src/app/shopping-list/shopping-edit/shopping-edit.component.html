@@ -17,11 +17,9 @@
   </div>
   <div class="row" style="margin-top: 10px;">
     <div class="col-xs-12">
-      <button mat-raised-button color="primary" type="submit" [disabled]="addIngForm.invalid">{{ selectedIng? 'Update':'Add' }}</button>
-      <button mat-raised-button color="warn" type="button" (click)="onClickDeleteIngredient()"
-        [disabled]="!selectedIng">Delete</button>
+      <button mat-raised-button color="primary" type="submit">{{ selectedIng? 'Update':'Add' }}</button>
       <button mat-raised-button color="warn" type="button" (click)="onClickRemoveAll()">Delete all</button>
-      <button mat-raised-button color="accent" type="button" (click)="onClickAddRandom(10)">Add Random</button>
+      <button mat-raised-button color="primary" type="button" (click)="onClickAddRandom(10)">Add Random</button>
     </div>
   </div>
 </form>

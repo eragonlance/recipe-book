@@ -11,11 +11,14 @@
       <mat-form-field>
         <input matInput placeholder="Search" #filterInput (input)="filterString = filterInput.value">
       </mat-form-field>
-      <mat-nav-list style="max-height: 50vh; overflow: auto">
-        <a mat-list-item *ngFor="let ing of ingredients | filter:filterString:'name'" [class.active]="ing === selectedIng"
-          [style.backgroundColor]="ing === selectedIng? themeSwitcherService.getAccentColor():'unset'"
-          (click)="select(ing)">{{ ing.name }} ({{ ing.amount }})</a>
-      </mat-nav-list>
+      <div style="max-height: 50vh; overflow: auto">
+        <div class="list-item" *ngFor="let ing of ingredients | filter:filterString:'name'"
+          [class.active]="ing === selectedIng" [style.backgroundColor]="ing === selectedIng? themeSwitcherService.getAccentColor():'unset'"
+          (click)="onSelect(ing)" @removeAni>
+          <span>{{ ing.name }} ({{ ing.amount }})</span>
+          <span class="icon-delete" style="margin-left: 20px" *ngIf="ing === selectedIng" (click)="onDelete(ing)"></span>
+        </div>
+      </div>
     </mat-card>
   </div>
 </div>
