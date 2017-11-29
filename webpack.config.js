@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InlineChunkWebpackPlugin = require('inline-chunks-html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractTextPluginHash = new ExtractTextPlugin({ filename: '[name].[hash].bundle.css' });
 const extractTextPluginNoHash = new ExtractTextPlugin({ filename: '[name].bundle.css' });
@@ -363,6 +364,10 @@ module.exports = {
       tsConfigPath: 'src\\tsconfig.app.json',
       exclude: ['**/*.spec.ts'],
       compilerOptions: {}
+    }),
+    new InlineChunkWebpackPlugin({
+      inlineChunks: ['inline'],
+      deleteFile: true
     })
   ],
   node: {
