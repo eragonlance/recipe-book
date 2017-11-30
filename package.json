@@ -34,12 +34,14 @@
     "@angular/cli": "^1.5.1",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
+    "@ngtools/webpack": "^1.8.5",
     "autoprefixer": "^7.1.6",
     "circular-dependency-plugin": "^4.2.1",
     "copy-webpack-plugin": "^4.1.1",
     "css-loader": "^0.28.1",
     "cssnano": "^3.10.0",
     "exports-loader": "^0.6.4",
+    "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.29.0",
     "inline-chunks-html-webpack-plugin": "^1.2.1",
     "postcss-loader": "^2.0.8",
@@ -49,7 +51,7 @@
     "typescript": "^2.6.1",
     "uglifyjs-webpack-plugin": "^1.0.1",
     "url-loader": "^0.6.2",
-    "webpack": "^3.8.1",
+    "webpack": "^3.9.0",
     "webpack-concat-plugin": "^1.4.2",
     "webpack-dev-server": "^2.9.3"
   }

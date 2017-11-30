@@ -327,6 +327,7 @@ module.exports = {
       hashDigest: 'base64'
     }),
     new ModuleConcatenationPlugin({}),
+    new PurifyPlugin(),
     new UglifyJsPlugin({
       test: /\.js$/i,
       extractComments: false,
@@ -353,7 +354,6 @@ module.exports = {
         }
       }
     }),
-    new PurifyPlugin(),
     new AngularCompilerPlugin({
       mainPath: 'main.ts',
       platform: 0,
