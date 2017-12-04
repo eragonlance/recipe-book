@@ -1,4 +1,8 @@
-<button mat-raised-button color="primary" [routerLink]="['new']">New Recipe</button>
+<div class="row end-xs">
+  <div class="col-xs-12">
+    <button mat-raised-button color="primary" [routerLink]="['new']">New Recipe</button>
+  </div>
+</div>
 <mat-card style="margin-top: 10px;">
   <mat-nav-list>
     <a mat-list-item disableRipple *ngFor="let recipe of recipes; let i = index" [routerLink]="i"

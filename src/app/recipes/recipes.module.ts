@@ -25,6 +25,7 @@ const recipeRoutes: Routes = [
     component: RecipesComponent,
     resolve: { recipes: RecipesResolver },
     children: [
+      { path: '', component: RecipeListComponent },
       {
         path: 'new',
         component: RecipeEditComponent,

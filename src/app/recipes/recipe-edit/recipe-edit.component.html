@@ -1,7 +1,11 @@
 <form *ngIf="recipeIdIsValid || !isInEditMode; else notFound" [formGroup]="recipeForm"
   (ngSubmit)="onSubmit()">
-  <button mat-raised-button color="primary" type="submit">Save</button>
-  <button mat-raised-button color="warn" type="button" [routerLink]="['../']">Cancel</button>
+  <div class="row end-xs">
+    <div class="col-xs-12">
+      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button color="warn" type="button" [routerLink]="['../']">Cancel</button>
+    </div>
+  </div>
 
   <mat-card style="margin-top: 10px;">
     <h2>{{ isInEditMode? 'Edit Recipe':'New Recipe' }}</h2>
