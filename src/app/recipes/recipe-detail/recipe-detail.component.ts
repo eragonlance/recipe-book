@@ -42,4 +42,8 @@ export class RecipeDetailComponent implements OnInit {
       }
     });
   }
+
+  onClickBack() {
+    this.router.navigate(['/recipes']);
+  }
 }

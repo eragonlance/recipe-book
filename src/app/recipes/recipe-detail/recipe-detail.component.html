@@ -8,11 +8,15 @@
         <button mat-menu-item [routerLink]="['edit']">Edit recipe</button>
         <button mat-menu-item (click)="onDeleteRcipe()">Delete recipe</button>
       </mat-menu>
+
+      <button mat-raised-button color="accent" (click)="onClickBack()">Back</button>
     </div>
   </div>
   <mat-card style="margin-top: 10px">
-    <img [src]="recipe.imagePath" style="height: 200px">
-    <h2>{{ recipe.name }}</h2>
+    <div>
+      <img [src]="recipe.imagePath" style="max-height: 400px">
+      <h2>{{ recipe.name }}</h2>
+    </div>
     <mat-card-content>{{ recipe.description }}</mat-card-content>
     <h3 style="font-weight: 500">Ingredients</h3>
     <ul>
