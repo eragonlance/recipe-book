@@ -3,14 +3,12 @@
     <button mat-raised-button color="primary" [routerLink]="['new']">New Recipe</button>
   </div>
 </div>
-<mat-card style="margin-top: 10px;">
-  <mat-nav-list>
-    <a mat-list-item disableRipple *ngFor="let recipe of recipes; let i = index" [routerLink]="i"
-      routerLinkActive="active" #rla="routerLinkActive" [style.backgroundColor]="rla.isActive? themeSwitcherService.getAccentColor():'unset'"
-      @enterLeave>
-      <img matListAvatar [src]="recipe.imagePath" alt="">
-      <h2 matLine>{{ recipe.name }}</h2>
-      <p matLine>{{ recipe.description }}</p>
-    </a>
-  </mat-nav-list>
+
+<mat-card style="margin-top: 10px">
+  <mat-grid-list cols="4" rowHeight="1:1" gutterSize="5px">
+    <mat-grid-tile *ngFor="let recipe of recipes; let i = index" [style.backgroundImage]="'url(' + recipe.imagePath + ')'">
+      <a [routerLink]="i" (mouseenter)="onMouseEnterGridItem($event)" (mouseleave)="onMouseLeaveGridItem($event)"></a>
+      <mat-grid-tile-header>{{ recipe.name }}</mat-grid-tile-header>
+    </mat-grid-tile>
+  </mat-grid-list>
 </mat-card>

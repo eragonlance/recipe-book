@@ -3,21 +3,19 @@ import { Recipe } from './../recipe.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { ThemeSwitcherService } from '../../shared/theme-switcher.service';
-import { enterLeave } from '../../shared/animations';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
-  styleUrls: ['./recipe-list.component.styl'],
-  animations: [enterLeave]
+  styleUrls: ['./recipe-list.component.styl']
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[];
   private recipesSub: Subscription;
 
   constructor(
-    public recipeService: RecipeService,
-    public themeSwitcherService: ThemeSwitcherService
+    private recipeService: RecipeService,
+    private themeSwitcherService: ThemeSwitcherService
   ) {}
 
   ngOnInit() {
@@ -25,6 +23,16 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     this.recipesSub = this.recipeService.recipesRefChanged.subscribe(
       () => (this.recipes = this.recipeService.getRecipes())
     );
+  }
+
+  onMouseEnterGridItem(e: MouseEvent) {
+    const gridItemTitle = <HTMLElement>(<HTMLElement>e.target).nextElementSibling;
+    gridItemTitle.style.backgroundColor = this.themeSwitcherService.getPrimaryColor();
+  }
+
+  onMouseLeaveGridItem(e: MouseEvent) {
+    const gridItemTitle = <HTMLElement>(<HTMLElement>e.target).nextElementSibling;
+    gridItemTitle.style.backgroundColor = 'rgba(0,0,0,.38)';
   }
 
   ngOnDestroy() {

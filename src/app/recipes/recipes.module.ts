@@ -14,9 +14,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatMenuModule,
-  MatListModule,
   MatInputModule,
-  MatCardModule
+  MatCardModule,
+  MatGridListModule
 } from '@angular/material';
 
 const recipeRoutes: Routes = [
@@ -49,9 +49,9 @@ const recipeRoutes: Routes = [
     ReactiveFormsModule,
     MatButtonModule,
     MatMenuModule,
-    MatListModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [RecipeEditDeactivate, RecipesResolver]
 })
