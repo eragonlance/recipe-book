@@ -1,8 +1,8 @@
 <div class="main-wrapper">
   <app-header></app-header>
   <router-outlet name="homepage"></router-outlet>
-  <div class="container" style="margin-top: 10px;">
-    <router-outlet></router-outlet>
+  <div class="container" style="margin-top: 10px;" [@routeTransition]="getState(o)">
+    <router-outlet #o="outlet"></router-outlet>
   </div>
 </div>
 <app-footer></app-footer>

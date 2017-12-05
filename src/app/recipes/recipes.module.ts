@@ -25,17 +25,19 @@ const recipeRoutes: Routes = [
     component: RecipesComponent,
     resolve: { recipes: RecipesResolver },
     children: [
-      { path: '', component: RecipeListComponent },
+      { path: '', component: RecipeListComponent, data: { state: 'recipes' } },
       {
         path: 'new',
         component: RecipeEditComponent,
-        canDeactivate: [RecipeEditDeactivate]
+        canDeactivate: [RecipeEditDeactivate],
+        data: { state: 'recipe-new' }
       },
-      { path: ':id', component: RecipeDetailComponent },
+      { path: ':id', component: RecipeDetailComponent, data: { state: 'recipe-detail' } },
       {
         path: ':id/edit',
         component: RecipeEditComponent,
-        canDeactivate: [RecipeEditDeactivate]
+        canDeactivate: [RecipeEditDeactivate],
+        data: { state: 'recipe-edit' }
       }
     ]
   }
