@@ -23,6 +23,10 @@ export class RecipeService {
     return this.recipes.indexOf(recipe);
   }
 
+  get length(): number {
+    return this.recipes.length;
+  }
+
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
   }

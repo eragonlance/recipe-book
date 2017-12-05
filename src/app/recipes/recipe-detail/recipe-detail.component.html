@@ -9,7 +9,7 @@
         <button mat-menu-item (click)="onDeleteRcipe()">Delete recipe</button>
       </mat-menu>
 
-      <button mat-raised-button color="accent" (click)="onClickBack()">Back</button>
+      <a mat-raised-button color="accent" routerLink="../">Back</a>
     </div>
   </div>
   <mat-card style="margin-top: 10px">
@@ -24,8 +24,15 @@
         <h4>{{ item.name }} ({{ item.amount }})</h4>
       </li>
     </ul>
+    <mat-card-actions align="end">
+      <a mat-button *ngIf="id !== 0" [routerLink]="['/recipes', id - 1]">Previous</a>
+      <button mat-button disabled *ngIf="id === 0">Previous</button>
+      <a mat-button *ngIf="id !== maxId" [routerLink]="['/recipes', id + 1]">Next</a>
+      <button mat-button disabled *ngIf="id === maxId">Next</button>
+    </mat-card-actions>
   </mat-card>
 </ng-container>
+
 <ng-template #notFound>
   <h1 style="text-align: center">Recipe not found</h1>
 </ng-template>

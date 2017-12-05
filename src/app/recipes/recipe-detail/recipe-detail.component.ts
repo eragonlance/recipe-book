@@ -12,6 +12,8 @@ import { DialogComponent } from '../../dialog/dialog.component';
 })
 export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
+  id: number;
+  maxId: number;
 
   constructor(
     public recipeService: RecipeService,
@@ -22,7 +24,9 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.recipe = this.recipeService.getRecipe(+params['id']);
+      this.id = +params['id'];
+      this.maxId = this.recipeService.length - 1;
+      this.recipe = this.recipeService.getRecipe(this.id);
     });
   }
 
@@ -41,9 +45,5 @@ export class RecipeDetailComponent implements OnInit {
         this.router.navigate(['../'], { relativeTo: this.route });
       }
     });
-  }
-
-  onClickBack() {
-    this.router.navigate(['/recipes']);
   }
 }
