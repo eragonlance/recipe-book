@@ -144,6 +144,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
+  get userEmail() {
+    return this.authService.getEmail();
+  }
+
   ngOnDestroy() {
     this.headerTitleSub.unsubscribe();
   }

@@ -7,16 +7,31 @@
 
   <button mat-button [matMenuTriggerFor]="databaseMenu">Database</button>
   <mat-menu #databaseMenu>
-    <button mat-menu-item (click)="onSaveRecipes()">Save recipes</button>
-    <button mat-menu-item (click)="onFetchRecipes()">Fetch recipes</button>
+    <button mat-menu-item (click)="onSaveRecipes()">
+      <i class="material-icons">file_upload</i>
+      <span>Save recipes</span>
+    </button>
+    <button mat-menu-item (click)="onFetchRecipes()">
+      <i class="material-icons">file_download</i>
+      <span>Fetch recipes</span>
+    </button>
   </mat-menu>
 
   <button mat-button *ngIf="!isSignedIn;else account" (click)="onSignIn()">Sign in/Sign up</button>
   <ng-template #account>
-    <button mat-button [matMenuTriggerFor]="accountMenu">Account</button>
+    <button mat-button [matMenuTriggerFor]="accountMenu">
+      <i class="material-icons">account_circle</i>
+      <span>{{ userEmail }}</span>
+    </button>
     <mat-menu #accountMenu>
-      <button mat-menu-item (click)="onChangePassword()">Change password</button>
-      <button mat-menu-item (click)="onSignOut()">Sign out</button>
+      <button mat-menu-item (click)="onChangePassword()">
+        <i class="material-icons">edit</i>
+        <span>Change password</span>
+      </button>
+      <button mat-menu-item (click)="onSignOut()">
+        <i class="material-icons">exit_to_app</i>
+        <span>Sign out</span>
+      </button>
     </mat-menu>
   </ng-template>
 </mat-toolbar>

@@ -1,5 +1,8 @@
 <div class="home-panel" [style.backgroundColor]="themeSwitcherService.getPrimaryColor()">
   <h1>Welcome to the Recipe Book</h1>
   <img src="/assets/recipe.svg" alt="" style="height: 30vh">
-  <a mat-raised-button [routerLink]="['/recipes']">To recipes</a>
+  <a mat-raised-button [routerLink]="['/recipes']">
+    <span>To recipes</span>
+    <i class="material-icons md-18">arrow_forward</i>
+  </a>
 </div>

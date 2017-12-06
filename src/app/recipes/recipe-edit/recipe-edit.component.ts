@@ -111,7 +111,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
-    if (!this.recipeIdIsValid) return true;
+    if (!this.recipeIdIsValid && this.isInEditMode) return true;
 
     if (!this.isSubmitted && this.recipeForm.dirty) {
       const dialogRef = this.matDialog.open(DialogComponent, {

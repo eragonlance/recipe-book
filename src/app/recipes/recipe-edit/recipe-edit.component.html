@@ -2,13 +2,22 @@
   (ngSubmit)="onSubmit()">
   <div class="row end-xs">
     <div class="col-xs-12">
-      <button mat-raised-button color="primary" type="submit">Save</button>
-      <button mat-raised-button color="warn" type="button" [routerLink]="['../']">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">
+        <i class="material-icons md-18">save</i>
+        <span>Save</span>
+      </button>
+      <button mat-raised-button color="warn" type="button" [routerLink]="['../']">
+        <i class="material-icons md-18">close</i>
+        <span>Cancel</span>
+      </button>
     </div>
   </div>
 
   <mat-card style="margin-top: 10px;">
-    <h2>{{ isInEditMode? 'Edit Recipe':'New Recipe' }}</h2>
+    <h2>
+      <i class="material-icons">{{ isInEditMode? 'edit':'insert_drive_file' }}</i>
+      {{ isInEditMode? 'Edit Recipe':'New Recipe' }}
+    </h2>
 
     <mat-form-field class="full-width">
       <input matInput placeholder="Recipe name" formControlName="name">
