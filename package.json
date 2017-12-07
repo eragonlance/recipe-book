@@ -14,12 +14,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.0.0",
-    "@angular/cdk": "^5.0.0-rc.2",
+    "@angular/cdk": "^5.0.0",
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
     "@angular/core": "^5.0.0",
     "@angular/forms": "^5.0.0",
-    "@angular/material": "^5.0.0-rc.2",
+    "@angular/material": "^5.0.0",
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
@@ -51,7 +51,7 @@
     "typescript": "^2.6.1",
     "uglifyjs-webpack-plugin": "^1.0.1",
     "url-loader": "^0.6.2",
-    "webpack": "3.8.1",
+    "webpack": "^3.10.0",
     "webpack-concat-plugin": "^1.4.2",
     "webpack-dev-server": "^2.9.3"
   }

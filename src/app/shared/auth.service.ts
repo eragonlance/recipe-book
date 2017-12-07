@@ -38,9 +38,7 @@ export class AuthService {
   }
 
   getIdToken(): Promise<string> {
-    return this.currentUser
-      ? this.currentUser.getIdToken()
-      : new Promise<string>((resolve, reject) => resolve(''));
+    return this.currentUser ? this.currentUser.getIdToken() : Promise.resolve('');
   }
 
   getEmail(): string {
