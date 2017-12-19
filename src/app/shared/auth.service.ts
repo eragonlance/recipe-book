@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import { Injectable } from '@angular/core';
+import { User } from '@firebase/auth-types';
+import { Unsubscribe } from '@firebase/util';
 
 @Injectable()
 export class AuthService {
@@ -18,9 +20,7 @@ export class AuthService {
   signInWithEmailAndPassword(email: string, password: string, remember = true): Promise<any> {
     return remember
       ? this.auth.signInWithEmailAndPassword(email, password)
-      : this.auth
-          .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-          .then(() => this.auth.signInWithEmailAndPassword(email, password));
+      : this.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => this.auth.signInWithEmailAndPassword(email, password));
   }
 
   signOut(): Promise<any> {
@@ -28,9 +28,7 @@ export class AuthService {
   }
 
   reAuthenticate(password: string): Promise<any> {
-    return this.currentUser.reauthenticateWithCredential(
-      firebase.auth.EmailAuthProvider.credential(this.currentUser.email, password)
-    );
+    return this.currentUser.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(this.currentUser.email, password));
   }
 
   changePassword(newPassword): Promise<any> {
@@ -45,7 +43,7 @@ export class AuthService {
     return this.currentUser.email;
   }
 
-  onAuthStateChanged(nextOrObserver: (a: firebase.User) => void): firebase.Unsubscribe {
+  onAuthStateChanged(nextOrObserver: (a: User) => void): Unsubscribe {
     return this.auth.onAuthStateChanged(nextOrObserver);
   }
 

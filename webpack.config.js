@@ -15,7 +15,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
 const cssnano = require('cssnano');
-const customProperties = require('postcss-custom-properties');
 
 const { NoEmitOnErrorsPlugin, EnvironmentPlugin, HashedModuleIdsPlugin } = require('webpack');
 const {
@@ -64,7 +63,6 @@ const postcssPlugins = function() {
     autoprefixer({
       flexbox: false
     }),
-    customProperties({ preserve: true }),
     cssnano()
   ];
 };
