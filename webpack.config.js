@@ -275,7 +275,7 @@ module.exports = {
       failOnError: false
     }),
     new HtmlWebpackPlugin({
-      template: './src\\index.html',
+      template: './src/index.html',
       filename: './index.html',
       hash: false,
       inject: true,
@@ -356,10 +356,10 @@ module.exports = {
       mainPath: 'main.ts',
       platform: 0,
       hostReplacementPaths: {
-        'environments\\environment.ts': 'environments\\environment.prod.ts'
+        'environments/environment.ts': 'environments/environment.prod.ts'
       },
       sourceMap: false,
-      tsConfigPath: 'src\\tsconfig.app.json',
+      tsConfigPath: 'src/tsconfig.app.json',
       exclude: ['**/*.spec.ts'],
       compilerOptions: {}
     }),

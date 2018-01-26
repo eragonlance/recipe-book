@@ -9,6 +9,7 @@
   "scripts": {
     "ng": "ng",
     "build": "webpack",
+    "test": "webpack",
     "start": "ng serve --aot"
   },
   "private": true,
