@@ -348,7 +348,8 @@ module.exports = {
           pure_getters: true,
           passes: 3,
           toplevel: true,
-          hoist_props: true
+          hoist_props: true,
+          inline: 1
         }
       }
     }),
