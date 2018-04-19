@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class BackendService {
+export class DataService {
   private prefetchedRecipes: Observable<Recipe[]>;
 
   constructor(private http: HttpClient) {

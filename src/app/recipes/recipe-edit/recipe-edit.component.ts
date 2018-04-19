@@ -1,5 +1,5 @@
 import { Utility } from './../../shared/utilities';
-import { ThemeSwitcherService } from './../../shared/theme-switcher.service';
+import { ThemeSwitcherService } from '../../services/theme-switcher.service';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { RecipeService } from './../recipe.service';

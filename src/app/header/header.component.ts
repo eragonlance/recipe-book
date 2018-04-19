@@ -1,6 +1,6 @@
 import { ChangePasswordComponent } from './../account/change-password/change-password.component';
-import { AuthService } from './../shared/auth.service';
-import { BackendService } from '../shared/backend.service';
+import { AuthService } from '../services/auth.service';
+import { DataService } from '../services/data.service';
 import { Utility } from './../shared/utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isSignedIn: boolean;
 
   constructor(
-    private backendService: BackendService,
+    private dataService: DataService,
     private recipeService: RecipeService,
     private matDialog: MatDialog,
     private authService: AuthService
@@ -105,7 +105,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               }
             });
           } else {
-            this.backendService.saveRecipes(token, this.recipeService.getRecipes()).subscribe(
+            this.dataService.saveRecipes(token, this.recipeService.getRecipes()).subscribe(
               () => {
                 this.matDialog.open(DialogComponent, {
                   width: '300px',
@@ -138,7 +138,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe(res => {
         if (res)
-          this.backendService
+          this.dataService
             .fetchRecipes(true)
             .subscribe(recipes => this.recipeService.setRecipes(recipes));
       });

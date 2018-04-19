@@ -1,5 +1,5 @@
 import { Recipe } from './recipes/recipe.model';
-import { BackendService } from './shared/backend.service';
+import { DataService } from './services/data.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { RecipeService } from './recipes/recipe.service';
 import { routeTransition } from './shared/animations';
@@ -12,12 +12,12 @@ import { RouterOutlet } from '@angular/router';
   animations: [routeTransition]
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  constructor(private backendService: BackendService, private recipeService: RecipeService) {}
+  constructor(private dataService: DataService, private recipeService: RecipeService) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.backendService.fetchRecipes().subscribe(recipes => this.recipeService.setRecipes(recipes));
+    this.dataService.fetchRecipes().subscribe(recipes => this.recipeService.setRecipes(recipes));
   }
 
   getState(outlet: RouterOutlet) {

@@ -3,6 +3,8 @@ import 'firebase/auth';
 import { Injectable } from '@angular/core';
 import { User } from '@firebase/auth-types';
 import { Unsubscribe } from '@firebase/util';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class AuthService {
@@ -47,10 +49,10 @@ export class AuthService {
     return this.auth.onAuthStateChanged(nextOrObserver);
   }
 
-  private get auth() {
+  private get auth(): firebase.auth.Auth {
     return firebase.auth();
   }
-  private get currentUser() {
+  private get currentUser(): User {
     return firebase.auth().currentUser;
   }
 }

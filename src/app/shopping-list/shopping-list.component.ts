@@ -1,4 +1,4 @@
-import { ThemeSwitcherService } from './../shared/theme-switcher.service';
+import { ThemeSwitcherService } from '../services/theme-switcher.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ShoppingService } from './../shopping.service';
 import { Utility } from './../shared/utilities';

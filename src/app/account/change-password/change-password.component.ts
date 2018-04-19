@@ -1,6 +1,6 @@
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../shared/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { CustomValidators } from '../../shared/custom-validators';
 import { MatDialogRef } from '@angular/material';
 

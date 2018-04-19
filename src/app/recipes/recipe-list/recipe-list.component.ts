@@ -2,7 +2,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Recipe } from './../recipe.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RecipeService } from '../recipe.service';
-import { ThemeSwitcherService } from '../../shared/theme-switcher.service';
+import { ThemeSwitcherService } from '../../services/theme-switcher.service';
 
 @Component({
   selector: 'app-recipe-list',

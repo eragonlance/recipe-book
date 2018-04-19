@@ -1,4 +1,4 @@
-import { ThemeSwitcherService } from './../shared/theme-switcher.service';
+import { ThemeSwitcherService } from '../services/theme-switcher.service';
 import { Utility } from './../shared/utilities';
 import { Component, OnInit } from '@angular/core';
 

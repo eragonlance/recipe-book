@@ -9,11 +9,11 @@ import { FooterComponent } from './footer/footer.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { BackendService } from './shared/backend.service';
+import { DataService } from './services/data.service';
 import { RecipeService } from './recipes/recipe.service';
 import { ShoppingService } from './shopping.service';
-import { AuthService } from './shared/auth.service';
-import { ThemeSwitcherService } from './shared/theme-switcher.service';
+import { AuthService } from './services/auth.service';
+import { ThemeSwitcherService } from './services/theme-switcher.service';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -59,7 +59,7 @@ import {
     MatProgressSpinnerModule,
     MatCheckboxModule
   ],
-  providers: [RecipeService, ShoppingService, BackendService, AuthService, ThemeSwitcherService],
+  providers: [RecipeService, ShoppingService, DataService, AuthService, ThemeSwitcherService],
   bootstrap: [AppComponent],
   entryComponents: [SignInComponent, DialogComponent, ChangePasswordComponent]
 })

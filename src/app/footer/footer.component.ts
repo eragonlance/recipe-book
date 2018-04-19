@@ -1,4 +1,4 @@
-import { ThemeSwitcherService } from '../shared/theme-switcher.service';
+import { ThemeSwitcherService } from '../services/theme-switcher.service';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatSlideToggleChange, MatSlideToggle } from '@angular/material';
 import { ChangeDetectorRef } from '@angular/core';
