@@ -7,7 +7,8 @@ import { ErrorComponent } from './error/error.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './shared/app-routing.module';
+import { AppMaterialModule } from './shared/app-material.module';
 
 import { DataService } from './services/data.service';
 import { RecipeService } from './recipes/recipe.service';
@@ -20,17 +21,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatButtonModule,
-  MatMenuModule,
-  MatToolbarModule,
-  MatSlideToggleModule,
-  MatDialogModule,
-  MatCardModule,
-  MatInputModule,
-  MatProgressSpinnerModule,
-  MatCheckboxModule
-} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -48,16 +38,8 @@ import {
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatSlideToggleModule,
-    MatDialogModule,
     AppRoutingModule,
-    MatCardModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatCheckboxModule
+    AppMaterialModule
   ],
   providers: [RecipeService, ShoppingService, DataService, AuthService, ThemeSwitcherService],
   bootstrap: [AppComponent],

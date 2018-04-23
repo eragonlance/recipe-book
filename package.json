@@ -37,7 +37,7 @@
     "@angular/cli": "^1.5.5",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
-    "@firebase/app-types": "^0.1.2",
+    "@firebase/app-types": "^0.2.0",
     "@ngtools/webpack": "^1.8.5",
     "autoprefixer": "^8.0.0",
     "circular-dependency-plugin": "^4.2.1",
