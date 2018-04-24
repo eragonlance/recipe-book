@@ -1,33 +1,46 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RecipeService } from './../recipe.service';
-import { Recipe } from './../recipe.model';
-import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+
 import { DialogComponent } from '../../dialog/dialog.component';
+import { Recipe } from './../recipe.model';
+import { RecipeService } from './../recipe.service';
+import { RecipesState } from '../../ngrx/reducers/recipes.reducer';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.styl']
 })
-export class RecipeDetailComponent implements OnInit {
+export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: Recipe;
   id: number;
   maxId: number;
+  private recipeSub: Subscription;
 
   constructor(
     public recipeService: RecipeService,
     private route: ActivatedRoute,
     private matDialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private store: Store<any>
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.id = +params['id'];
-      this.maxId = this.recipeService.length - 1;
-      this.recipe = this.recipeService.getRecipe(this.id);
-    });
+    this.recipeSub = this.route.params
+      .switchMap(params =>
+        this.store.select('recipesReducer').map((recipesState: RecipesState) => {
+          this.id = +params['id'];
+          this.maxId = recipesState.recipes.length - 1;
+          return recipesState.recipes[this.id];
+        })
+      )
+      .subscribe((recipe: Recipe) => {
+        this.recipe = recipe;
+      });
   }
 
   onDeleteRcipe() {
@@ -45,5 +58,9 @@ export class RecipeDetailComponent implements OnInit {
         this.router.navigate(['../'], { relativeTo: this.route });
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.recipeSub.unsubscribe();
   }
 }
