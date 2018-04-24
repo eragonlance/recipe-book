@@ -23,7 +23,7 @@ const recipeRoutes: Routes = [
   {
     path: '',
     component: RecipesComponent,
-    resolve: { recipes: RecipesResolver },
+    resolve: { recipesState: RecipesResolver },
     children: [
       { path: '', component: RecipeListComponent, data: { state: 'recipes' } },
       {

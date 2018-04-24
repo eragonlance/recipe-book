@@ -15,7 +15,7 @@ export class RecipesComponent implements OnInit {
 
   ngOnInit() {
     Utility.headerTitle.next('Recipes');
-    this.recipeService.setRecipes(this.activatedRoute.snapshot.data['recipes']);
+    this.recipeService.setRecipes(this.activatedRoute.snapshot.data['recipesState'].recipes);
   }
 
   getState(outlet: RouterOutlet) {

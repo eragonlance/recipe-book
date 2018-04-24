@@ -11,14 +11,10 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.styl'],
   animations: [routeTransition]
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  constructor(private dataService: DataService, private recipeService: RecipeService) {}
+export class AppComponent implements OnInit {
+  constructor() {}
 
   ngOnInit() {}
-
-  ngAfterViewInit() {
-    this.dataService.fetchRecipes().subscribe(recipes => this.recipeService.setRecipes(recipes));
-  }
 
   getState(outlet: RouterOutlet) {
     return outlet.activatedRouteData.state;

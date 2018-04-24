@@ -20,7 +20,7 @@ export class DataService {
     );
   }
 
-  fetchRecipes(refresh = false): Observable<Recipe[]> {
+  fetchRecipes(refresh = true): Observable<Recipe[]> {
     if (refresh) {
       this.prefetchedRecipes = this.http
         .get<Recipe[]>('https://recipe-book-eragonlance.firebaseio.com/recipes.json')
@@ -31,9 +31,7 @@ export class DataService {
             }
             return recipe;
           })
-        )
-        .publishLast()
-        .refCount();
+        );
     }
     return this.prefetchedRecipes;
   }

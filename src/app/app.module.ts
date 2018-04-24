@@ -21,6 +21,10 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { recipesReducer } from './ngrx/reducers/recipes.reducer';
+import { RecipesEffect } from './ngrx/effects/recipes.effect';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    StoreModule.forRoot({ recipesReducer }),
+    EffectsModule.forRoot([RecipesEffect]),
     AppMaterialModule
   ],
   providers: [RecipeService, ShoppingService, DataService, AuthService, ThemeSwitcherService],
