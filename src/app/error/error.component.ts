@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Utility } from '../shared/utilities';
+import { Utils } from '../shared/utils';
 
 @Component({
   selector: 'app-error',
@@ -12,6 +12,6 @@ export class ErrorComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    Utility.headerTitle.next('');
+    Utils.headerTitle.next('');
   }
 }

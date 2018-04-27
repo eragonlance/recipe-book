@@ -1,4 +1,4 @@
-import { Utility } from './shared/utilities';
+import { Utils } from './shared/utils';
 import { Ingredient } from './shared/ingredient.model';
 import { Subject } from 'rxjs/Subject';
 
@@ -54,8 +54,8 @@ export class ShoppingService {
 
   addRandom(n: number) {
     for (let i = 0; i < n; i++) {
-      const name = Utility.strRand(10);
-      this.ingredients.set(name, new Ingredient(name, Utility.numRand(1, 100)));
+      const name = Utils.strRand(10);
+      this.ingredients.set(name, new Ingredient(name, Utils.numRand(1, 100)));
     }
     this.listChanged.next();
   }

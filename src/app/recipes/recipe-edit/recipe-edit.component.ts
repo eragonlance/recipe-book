@@ -1,4 +1,4 @@
-import { Utility } from './../../shared/utilities';
+import { Utils } from '../../shared/utils';
 import { ThemeSwitcherService } from '../../services/theme-switcher.service';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -128,7 +128,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   testImageURL(): boolean {
-    return Utility.testURL(this.imagePath.value);
+    return Utils.testURL(this.imagePath.value);
   }
 
   get name() {

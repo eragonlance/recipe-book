@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
-export class Utility {
+export class Utils {
   private static charPool = 'abcefghijklmnopqrstuvwxyz0123456789';
   private static urlRegex = new RegExp(
     '^' +
@@ -34,10 +34,10 @@ export class Utility {
 
   /** Generate a random string */
   static strRand(length: number): string {
-    const poolLength = Utility.charPool.length;
+    const poolLength = Utils.charPool.length;
     let str = '';
     for (let i = 0; i < length; i++) {
-      str += Utility.charPool.charAt(Utility.numRand(0, poolLength - 1));
+      str += Utils.charPool.charAt(Utils.numRand(0, poolLength - 1));
     }
     return str;
   }

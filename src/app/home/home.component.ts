@@ -1,5 +1,5 @@
 import { ThemeSwitcherService } from '../services/theme-switcher.service';
-import { Utility } from './../shared/utilities';
+import { Utils } from '../shared/utils';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,6 +11,6 @@ export class HomeComponent implements OnInit {
   constructor(public themeSwitcherService: ThemeSwitcherService) {}
 
   ngOnInit() {
-    Utility.headerTitle.next('home');
+    Utils.headerTitle.next('home');
   }
 }

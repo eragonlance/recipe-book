@@ -1,7 +1,7 @@
 import { ChangePasswordComponent } from './../account/change-password/change-password.component';
 import { AuthService } from '../services/auth.service';
 import { DataService } from '../services/data.service';
-import { Utility } from './../shared/utilities';
+import { Utils } from '../shared/utils';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { RecipeService } from '../recipes/recipe.service';
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.headerTitleSub = Utility.headerTitle.subscribe(
+    this.headerTitleSub = Utils.headerTitle.subscribe(
       (headerTitle: string) => (this.headerTitle = headerTitle)
     );
 

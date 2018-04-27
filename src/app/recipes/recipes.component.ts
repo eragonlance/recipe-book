@@ -1,4 +1,4 @@
-import { Utility } from './../shared/utilities';
+import { Utils } from '../shared/utils';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { RecipeService } from './recipe.service';
@@ -14,7 +14,7 @@ export class RecipesComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private recipeService: RecipeService) {}
 
   ngOnInit() {
-    Utility.headerTitle.next('Recipes');
+    Utils.headerTitle.next('Recipes');
     this.recipeService.setRecipes(this.activatedRoute.snapshot.data['recipesState'].recipes);
   }
 

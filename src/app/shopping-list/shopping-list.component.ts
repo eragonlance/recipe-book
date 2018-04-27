@@ -1,7 +1,7 @@
 import { ThemeSwitcherService } from '../services/theme-switcher.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ShoppingService } from './../shopping.service';
-import { Utility } from './../shared/utilities';
+import { Utils } from '../shared/utils';
 import { Ingredient } from './../shared/ingredient.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { enterLeave } from '../shared/animations';
@@ -24,7 +24,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    Utility.headerTitle.next('Shopping list');
+    Utils.headerTitle.next('Shopping list');
     this.ingredients = this.shoppingService.getIngs();
 
     this.listChangedSub = this.shoppingService.listChanged.subscribe(() => {
