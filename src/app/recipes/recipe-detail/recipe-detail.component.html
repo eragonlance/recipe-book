@@ -1,4 +1,4 @@
-<ng-container *ngIf="recipe; else notFound">
+<ng-container *ngIf="data$ | async as data; else notFound">
   <div class="row end-xs">
     <div class="col-xs-12">
       <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
@@ -6,7 +6,7 @@
         <span>Manage recipe</span>
       </button>
       <mat-menu #menu>
-        <button mat-menu-item (click)="recipeService.addToShoppingList(recipe)">
+        <button mat-menu-item (click)="recipeService.addToShoppingList(data.recipe)">
           <i class="material-icons">add_shopping_cart</i>
           <span>Add to shopping list</span>
         </button>
@@ -14,7 +14,7 @@
           <i class="material-icons">edit</i>
           <span>Edit recipe</span>
         </a>
-        <button mat-menu-item (click)="onDeleteRcipe()">
+        <button mat-menu-item (click)="onDeleteRcipe(data.recipe)">
           <i class="material-icons">delete</i>
           <span>Delete recipe</span>
         </button>
@@ -23,28 +23,28 @@
   </div>
   <mat-card style="margin-top: 10px">
     <div>
-      <img [src]="recipe.imagePath" style="max-height: 40vh">
-      <h2>{{ recipe.name }}</h2>
+      <img [src]="data.recipe.imagePath" style="max-height: 40vh">
+      <h2>{{ data.recipe.name }}</h2>
     </div>
-    <mat-card-content>{{ recipe.description }}</mat-card-content>
+    <mat-card-content>{{ data.recipe.description }}</mat-card-content>
     <h3 style="font-weight: 500">Ingredients</h3>
     <ul>
-      <li *ngFor="let item of recipe.ingredients">
+      <li *ngFor="let item of data.recipe.ingredients">
         <h4>{{ item.name }} ({{ item.amount }})</h4>
       </li>
     </ul>
 
     <mat-card-actions align="end">
-      <a mat-icon-button *ngIf="id !== 0" [routerLink]="['/recipes', id - 1]">
+      <a mat-icon-button *ngIf="data.previousId !== -1" [routerLink]="['/recipes', data.previousId]">
         <i class="material-icons">arrow_back</i>
       </a>
-      <button mat-icon-button disabled *ngIf="id === 0">
+      <button mat-icon-button disabled *ngIf="data.previousId === -1">
         <i class="material-icons">arrow_back</i>
       </button>
-      <a mat-icon-button *ngIf="id !== maxId" [routerLink]="['/recipes', id + 1]">
+      <a mat-icon-button *ngIf="data.nextId !== -1" [routerLink]="['/recipes', data.nextId]">
         <i class="material-icons">arrow_forward</i>
       </a>
-      <button mat-icon-button disabled *ngIf="id === maxId">
+      <button mat-icon-button disabled *ngIf="data.nextId === -1">
         <i class="material-icons">arrow_forward</i>
       </button>
     </mat-card-actions>

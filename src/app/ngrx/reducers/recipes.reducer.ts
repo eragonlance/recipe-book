@@ -1,5 +1,6 @@
 import { Recipe } from '../../recipes/recipe.model';
 import { RecipesAction } from '../actions/recipes.action';
+import { Utils } from '../../shared/utils';
 
 const initialState: RecipesState = {
   recipes: [],
@@ -15,6 +16,16 @@ export function recipesReducer(state: RecipesState = initialState, action) {
       return { ...state, recipes: action.payload, pending: false };
     case RecipesAction.FETCH_RECIPES_ERROR:
       return { ...state, pending: false, error: action.payload };
+    case RecipesAction.REMOVE_RECIPE:
+      return {
+        recipes: Utils.spliceReturnNewArray(
+          state.recipes,
+          state.recipes.findIndex((recipe: Recipe) => recipe.id === action.payload),
+          1
+        ),
+        pending: false,
+        error: null
+      };
   }
 }
 

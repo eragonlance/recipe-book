@@ -1,25 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
 import { DialogComponent } from '../../dialog/dialog.component';
 import { Recipe } from './../recipe.model';
 import { RecipeService } from './../recipe.service';
 import { RecipesState } from '../../ngrx/reducers/recipes.reducer';
+import { RecipesAction } from '../../ngrx/actions/recipes.action';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.styl']
 })
-export class RecipeDetailComponent implements OnInit, OnDestroy {
-  recipe: Recipe;
-  id: number;
-  maxId: number;
-  private recipeSub: Subscription;
+export class RecipeDetailComponent implements OnInit {
+  data$: Observable<Data>;
 
   constructor(
     public recipeService: RecipeService,
@@ -30,37 +27,43 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.recipeSub = this.route.params
-      .switchMap(params =>
-        this.store.select('recipesReducer').map((recipesState: RecipesState) => {
-          this.id = +params['id'];
-          this.maxId = recipesState.recipes.length - 1;
-          return recipesState.recipes[this.id];
-        })
-      )
-      .subscribe((recipe: Recipe) => {
-        this.recipe = recipe;
-      });
+    this.data$ = this.route.params.switchMap(params =>
+      this.store.select('recipesReducer').map((recipesState: RecipesState): Data => {
+        const recipes = recipesState.recipes;
+        const idx = recipes.findIndex((recipe: Recipe) => recipe.id === +params['id']);
+        if (idx === -1) {
+          return null;
+        }
+
+        return {
+          recipe: recipes[idx],
+          previousId: recipes[idx - 1] ? recipes[idx - 1].id : -1,
+          nextId: recipes[idx + 1] ? recipes[idx + 1].id : -1
+        };
+      })
+    );
   }
 
-  onDeleteRcipe() {
+  onDeleteRcipe(recipe: Recipe) {
     const dialogRef = this.matDialog.open(DialogComponent, {
       width: '300px',
       data: {
         title: 'Delete',
-        content: 'Do you want to delete ' + this.recipe.name + ' recipe?'
+        content: 'Do you want to delete ' + recipe.name + ' recipe?'
       }
     });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.recipeService.removeRecipe(this.recipe);
+        this.store.dispatch(RecipesAction.removeRecipe(recipe.id));
         this.router.navigate(['../'], { relativeTo: this.route });
       }
     });
   }
+}
 
-  ngOnDestroy() {
-    this.recipeSub.unsubscribe();
-  }
+interface Data {
+  recipe: Recipe;
+  previousId: number;
+  nextId: number;
 }
