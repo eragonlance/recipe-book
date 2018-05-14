@@ -16,6 +16,12 @@ export function recipesReducer(state: RecipesState = initialState, action) {
       return { ...state, recipes: action.payload, pending: false };
     case RecipesAction.FETCH_RECIPES_ERROR:
       return { ...state, pending: false, error: action.payload };
+    case RecipesAction.ADD_RECIPE:
+      return {
+        recipes: [...state.recipes, Recipe.clone(action.payload)],
+        pending: false,
+        error: null
+      };
     case RecipesAction.REMOVE_RECIPE:
       return {
         recipes: Utils.spliceReturnNewArray(

@@ -10,6 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { enterLeave } from '../../shared/animations';
+import { Store } from '@ngrx/store';
+import { RecipesAction } from '../../ngrx/actions/recipes.action';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -28,6 +30,7 @@ export class RecipeEditComponent implements OnInit {
     private router: Router,
     private recipeService: RecipeService,
     private matDialog: MatDialog,
+    private store: Store<any>,
     public themeSwitcherService: ThemeSwitcherService
   ) {}
 
@@ -103,7 +106,9 @@ export class RecipeEditComponent implements OnInit {
     if (this.isInEditMode) {
       this.recipeService.updateRecipe(+this.route.snapshot.params['id'], this.recipeForm.value);
     } else {
-      this.recipeService.addRecipe(this.recipeForm.value);
+      this.store.dispatch(
+        RecipesAction.addRecipe({ id: Utils.numRandDigit(10), ...this.recipeForm.value })
+      );
     }
 
     this.isSubmitted = true;

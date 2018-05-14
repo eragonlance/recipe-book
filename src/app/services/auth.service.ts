@@ -22,7 +22,9 @@ export class AuthService {
   signInWithEmailAndPassword(email: string, password: string, remember = true): Promise<any> {
     return remember
       ? this.auth.signInWithEmailAndPassword(email, password)
-      : this.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => this.auth.signInWithEmailAndPassword(email, password));
+      : this.auth
+          .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+          .then(() => this.auth.signInWithEmailAndPassword(email, password));
   }
 
   signOut(): Promise<any> {
@@ -30,7 +32,9 @@ export class AuthService {
   }
 
   reAuthenticate(password: string): Promise<any> {
-    return this.currentUser.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(this.currentUser.email, password));
+    return this.currentUser.reauthenticateWithCredential(
+      firebase.auth.EmailAuthProvider.credential(this.currentUser.email, password)
+    );
   }
 
   changePassword(newPassword): Promise<any> {
@@ -52,7 +56,8 @@ export class AuthService {
   private get auth(): firebase.auth.Auth {
     return firebase.auth();
   }
-  private get currentUser(): User {
+
+  private get currentUser(): firebase.User {
     return firebase.auth().currentUser;
   }
 }
