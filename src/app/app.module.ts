@@ -11,7 +11,6 @@ import { AppRoutingModule } from './shared/app-routing.module';
 import { AppMaterialModule } from './shared/app-material.module';
 
 import { DataService } from './services/data.service';
-import { RecipeService } from './recipes/recipe.service';
 import { ShoppingService } from './shopping.service';
 import { AuthService } from './services/auth.service';
 import { ThemeSwitcherService } from './services/theme-switcher.service';
@@ -47,7 +46,7 @@ import { RecipesEffect } from './ngrx/effects/recipes.effect';
     EffectsModule.forRoot([RecipesEffect]),
     AppMaterialModule
   ],
-  providers: [RecipeService, ShoppingService, DataService, AuthService, ThemeSwitcherService],
+  providers: [ShoppingService, DataService, AuthService, ThemeSwitcherService],
   bootstrap: [AppComponent],
   entryComponents: [SignInComponent, DialogComponent, ChangePasswordComponent]
 })

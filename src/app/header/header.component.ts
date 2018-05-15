@@ -4,7 +4,6 @@ import { DataService } from '../services/data.service';
 import { Utils } from '../shared/utils';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { RecipeService } from '../recipes/recipe.service';
 import { MatDialog } from '@angular/material';
 import { SignInComponent } from '../account/sign-in/sign-in.component';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -21,7 +20,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    private recipeService: RecipeService,
     private matDialog: MatDialog,
     private authService: AuthService
   ) {}
@@ -105,19 +103,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
               }
             });
           } else {
-            this.dataService.saveRecipes(token, this.recipeService.getRecipes()).subscribe(
-              () => {
-                this.matDialog.open(DialogComponent, {
-                  width: '300px',
-                  data: {
-                    title: 'Success',
-                    content: 'Successfully saved to database.',
-                    type: 'alert'
-                  }
-                });
-              },
-              err => console.log(err)
-            );
+            // this.dataService.saveRecipes(token, this.recipeService.getRecipes()).subscribe(
+            //   () => {
+            //     this.matDialog.open(DialogComponent, {
+            //       width: '300px',
+            //       data: {
+            //         title: 'Success',
+            //         content: 'Successfully saved to database.',
+            //         type: 'alert'
+            //       }
+            //     });
+            //   },
+            //   err => console.log(err)
+            // );
           }
         });
       });
@@ -137,10 +135,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       })
       .afterClosed()
       .subscribe(res => {
-        if (res)
-          this.dataService
-            .fetchRecipes(true)
-            .subscribe(recipes => this.recipeService.setRecipes(recipes));
+        if (res) this.dataService.fetchRecipes(true);
+        // .subscribe(recipes => this.recipeService.setRecipes(recipes));
       });
   }
 

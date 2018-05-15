@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { DialogComponent } from '../../dialog/dialog.component';
 import { Recipe } from './../recipe.model';
-import { RecipeService } from './../recipe.service';
 import { RecipesState } from '../../ngrx/reducers/recipes.reducer';
 import { RecipesAction } from '../../ngrx/actions/recipes.action';
 
@@ -19,7 +18,6 @@ export class RecipeDetailComponent implements OnInit {
   data$: Observable<Data>;
 
   constructor(
-    public recipeService: RecipeService,
     private route: ActivatedRoute,
     private matDialog: MatDialog,
     private router: Router,

@@ -2,7 +2,6 @@ import { Utils } from '../../shared/utils';
 import { ThemeSwitcherService } from '../../services/theme-switcher.service';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
-import { RecipeService } from './../recipe.service';
 import { Ingredient } from './../../shared/ingredient.model';
 import { CustomValidators } from './../../shared/custom-validators';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
@@ -29,7 +28,6 @@ export class RecipeEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private recipeService: RecipeService,
     private matDialog: MatDialog,
     private store: Store<any>,
     public themeSwitcherService: ThemeSwitcherService

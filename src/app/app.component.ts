@@ -1,7 +1,6 @@
 import { Recipe } from './recipes/recipe.model';
 import { DataService } from './services/data.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { RecipeService } from './recipes/recipe.service';
 import { routeTransition } from './shared/animations';
 import { RouterOutlet } from '@angular/router';
 
