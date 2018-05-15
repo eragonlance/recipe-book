@@ -12,6 +12,8 @@ import { DialogComponent } from '../../dialog/dialog.component';
 import { enterLeave } from '../../shared/animations';
 import { Store } from '@ngrx/store';
 import { RecipesAction } from '../../ngrx/actions/recipes.action';
+import { Recipe } from '../recipe.model';
+import { RecipesState } from '../../ngrx/reducers/recipes.reducer';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -20,10 +22,9 @@ import { RecipesAction } from '../../ngrx/actions/recipes.action';
   animations: [enterLeave]
 })
 export class RecipeEditComponent implements OnInit {
-  recipeIdIsValid: boolean;
-  isInEditMode: boolean;
   isSubmitted = false;
   recipeForm: FormGroup;
+  recipe: Recipe;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,16 +36,28 @@ export class RecipeEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.params['id'];
-    this.isInEditMode = !!id;
-    this.recipeIdIsValid = !!this.recipeService.getRecipe(+id);
+    const id = +this.route.snapshot.params['id'];
 
-    if (this.recipeIdIsValid || !this.isInEditMode) {
-      this.initForm();
+    if (id) {
+      this.store
+        .select('recipesReducer')
+        .map((recipesState: RecipesState) =>
+          recipesState.recipes.find((recipe: Recipe) => recipe.id === id)
+        )
+        .take(1)
+        .subscribe((recipe: Recipe) => (this.recipe = recipe));
+    } else {
+      this.recipe = new Recipe(null, '', '', '', []);
     }
+
+    this.initForm();
   }
 
   initForm() {
+    if (!this.recipe) {
+      return;
+    }
+
     this.recipeForm = new FormGroup({
       name: new FormControl(null, Validators.required),
       imagePath: new FormControl(null, [Validators.required]),
@@ -52,16 +65,14 @@ export class RecipeEditComponent implements OnInit {
       ingredients: new FormArray([])
     });
 
-    if (this.isInEditMode) {
-      const recipe = this.recipeService.getRecipe(+this.route.snapshot.params['id']);
+    this.recipeForm.reset({
+      name: this.recipe.name,
+      imagePath: this.recipe.imagePath,
+      description: this.recipe.description
+    });
 
-      this.recipeForm.reset({
-        name: recipe.name,
-        imagePath: recipe.imagePath,
-        description: recipe.description
-      });
-
-      recipe.ingredients.forEach((ing: Ingredient) => {
+    if (this.recipe.ingredients.length > 0) {
+      this.recipe.ingredients.forEach((ing: Ingredient) => {
         this.ingredients.push(
           new FormGroup({
             name: new FormControl(ing.name, Validators.required),
@@ -103,8 +114,11 @@ export class RecipeEditComponent implements OnInit {
       return;
     }
 
-    if (this.isInEditMode) {
-      this.recipeService.updateRecipe(+this.route.snapshot.params['id'], this.recipeForm.value);
+    if (this.recipe.id) {
+      console.log(this.recipe.id);
+      this.store.dispatch(
+        RecipesAction.editRecipe({ id: this.recipe.id, ...this.recipeForm.value })
+      );
     } else {
       this.store.dispatch(
         RecipesAction.addRecipe({ id: Utils.numRandDigit(10), ...this.recipeForm.value })
@@ -116,9 +130,9 @@ export class RecipeEditComponent implements OnInit {
   }
 
   canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
-    if (!this.recipeIdIsValid && this.isInEditMode) return true;
+    if (!this.recipe || this.isSubmitted) return true;
 
-    if (!this.isSubmitted && this.recipeForm.dirty) {
+    if (this.recipeForm.dirty) {
       const dialogRef = this.matDialog.open(DialogComponent, {
         width: '250px',
         data: {
