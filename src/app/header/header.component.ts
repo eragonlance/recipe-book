@@ -9,6 +9,8 @@ import { SignInComponent } from '../account/sign-in/sign-in.component';
 import { DialogComponent } from '../dialog/dialog.component';
 import { Store } from '@ngrx/store';
 import { RecipesAction } from '../ngrx/actions/recipes.action';
+import { RecipesState } from '../ngrx/reducers/recipes.reducer';
+import { Recipe } from '../recipes/recipe.model';
 
 @Component({
   selector: 'app-header',
@@ -106,19 +108,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
               }
             });
           } else {
-            // this.dataService.saveRecipes(token, this.recipeService.getRecipes()).subscribe(
-            //   () => {
-            //     this.matDialog.open(DialogComponent, {
-            //       width: '300px',
-            //       data: {
-            //         title: 'Success',
-            //         content: 'Successfully saved to database.',
-            //         type: 'alert'
-            //       }
-            //     });
-            //   },
-            //   err => console.log(err)
-            // );
+            const recipes$ = this.store
+              .select('recipesReducer')
+              .map((state: RecipesState) => state.recipes)
+              .take(1);
+            recipes$.subscribe((recipes: Recipe[]) => {
+              this.dataService.saveRecipes(token, recipes).subscribe(
+                () => {
+                  this.matDialog.open(DialogComponent, {
+                    width: '300px',
+                    data: {
+                      title: 'Success',
+                      content: 'Successfully saved to database.',
+                      type: 'alert'
+                    }
+                  });
+                },
+                err => console.log(err)
+              );
+            });
           }
         });
       });
