@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { MatDialog } from '@angular/material';
 import { SignInComponent } from '../account/sign-in/sign-in.component';
 import { DialogComponent } from '../dialog/dialog.component';
+import { Store } from '@ngrx/store';
+import { RecipesAction } from '../ngrx/actions/recipes.action';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +23,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService,
     private matDialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<any>
   ) {}
 
   ngOnInit() {
@@ -135,8 +138,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       })
       .afterClosed()
       .subscribe(res => {
-        if (res) this.dataService.fetchRecipes(true);
-        // .subscribe(recipes => this.recipeService.setRecipes(recipes));
+        if (res) this.store.dispatch(RecipesAction.fetchRecipes());
       });
   }
 
