@@ -1,4 +1,4 @@
-import { Ingredient } from './../shared/ingredient.model';
+import { Ingredient } from './ingredient.model';
 
 export class Recipe {
   constructor(
@@ -10,8 +10,9 @@ export class Recipe {
   ) {}
 
   static clone(recipe: Recipe): Recipe {
-    return new Recipe(recipe.id, recipe.name, recipe.description, recipe.imagePath, [
-      ...recipe.ingredients
-    ]);
+    return {
+      ...recipe,
+      ingredients: recipe.ingredients.map((ing: Ingredient) => (ing = Ingredient.clone(ing)))
+    };
   }
 }

@@ -1,4 +1,4 @@
-import { Recipe } from '../../recipes/recipe.model';
+import { Recipe } from '../../models/recipe.model';
 
 export class RecipesAction {
   static FETCH_RECIPES = 'FETCH_RECIPES';

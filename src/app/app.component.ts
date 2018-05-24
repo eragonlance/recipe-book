@@ -1,4 +1,4 @@
-import { Recipe } from './recipes/recipe.model';
+import { Recipe } from './models/recipe.model';
 import { DataService } from './services/data.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { routeTransition } from './shared/animations';

@@ -1,4 +1,4 @@
-import { Recipe } from './../recipe.model';
+import { Recipe } from '../../models/recipe.model';
 import { Component, OnInit } from '@angular/core';
 import { ThemeSwitcherService } from '../../services/theme-switcher.service';
 import { Observable } from 'rxjs/Observable';

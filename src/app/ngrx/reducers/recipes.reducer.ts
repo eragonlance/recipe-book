@@ -1,4 +1,4 @@
-import { Recipe } from '../../recipes/recipe.model';
+import { Recipe } from '../../models/recipe.model';
 import { RecipesAction } from '../actions/recipes.action';
 import { Utils } from '../../shared/utils';
 
@@ -8,7 +8,7 @@ const initialState: RecipesState = {
   error: null
 };
 
-export function recipesReducer(state: RecipesState = initialState, action) {
+export function recipesReducer(state: RecipesState = initialState, action): RecipesState {
   switch (action.type) {
     case RecipesAction.FETCH_RECIPES:
       return { ...state, pending: true, error: null };
@@ -48,6 +48,9 @@ export function recipesReducer(state: RecipesState = initialState, action) {
         pending: false,
         error: null
       };
+
+    default:
+      return state;
   }
 }
 

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
-import { Recipe } from '../../recipes/recipe.model';
+import { Recipe } from '../../models/recipe.model';
 
 @Injectable()
 export class RecipesEffect {

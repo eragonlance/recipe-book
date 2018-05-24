@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { DialogComponent } from '../../dialog/dialog.component';
-import { Recipe } from './../recipe.model';
+import { Recipe } from '../../models/recipe.model';
 import { RecipesState } from '../../ngrx/reducers/recipes.reducer';
 import { RecipesAction } from '../../ngrx/actions/recipes.action';
 

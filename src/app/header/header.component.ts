@@ -10,7 +10,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { Store } from '@ngrx/store';
 import { RecipesAction } from '../ngrx/actions/recipes.action';
 import { RecipesState } from '../ngrx/reducers/recipes.reducer';
-import { Recipe } from '../recipes/recipe.model';
+import { Recipe } from '../models/recipe.model';
 
 @Component({
   selector: 'app-header',

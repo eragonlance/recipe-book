@@ -2,7 +2,7 @@ import { Utils } from '../../shared/utils';
 import { ThemeSwitcherService } from '../../services/theme-switcher.service';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
-import { Ingredient } from './../../shared/ingredient.model';
+import { Ingredient } from '../../models/ingredient.model';
 import { CustomValidators } from './../../shared/custom-validators';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { DialogComponent } from '../../dialog/dialog.component';
 import { enterLeave } from '../../shared/animations';
 import { Store } from '@ngrx/store';
 import { RecipesAction } from '../../ngrx/actions/recipes.action';
-import { Recipe } from '../recipe.model';
+import { Recipe } from '../../models/recipe.model';
 import { RecipesState } from '../../ngrx/reducers/recipes.reducer';
 
 @Component({
@@ -113,7 +113,6 @@ export class RecipeEditComponent implements OnInit {
     }
 
     if (this.recipe.id) {
-      console.log(this.recipe.id);
       this.store.dispatch(
         RecipesAction.editRecipe({ id: this.recipe.id, ...this.recipeForm.value })
       );

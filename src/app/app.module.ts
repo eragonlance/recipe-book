@@ -11,7 +11,7 @@ import { AppRoutingModule } from './shared/app-routing.module';
 import { AppMaterialModule } from './shared/app-material.module';
 
 import { DataService } from './services/data.service';
-import { ShoppingService } from './shopping.service';
+import { ShoppingService } from './services/shopping.service';
 import { AuthService } from './services/auth.service';
 import { ThemeSwitcherService } from './services/theme-switcher.service';
 
@@ -24,6 +24,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { recipesReducer } from './ngrx/reducers/recipes.reducer';
 import { RecipesEffect } from './ngrx/effects/recipes.effect';
+import { shoppingReducer } from './ngrx/reducers/shopping.reducer';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { RecipesEffect } from './ngrx/effects/recipes.effect';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    StoreModule.forRoot({ recipesReducer }),
+    StoreModule.forRoot({ recipesReducer, shoppingReducer }),
     EffectsModule.forRoot([RecipesEffect]),
     AppMaterialModule
   ],
