@@ -112,6 +112,8 @@ export class RecipeEditComponent implements OnInit {
       return;
     }
 
+    (this.recipeForm.value as Recipe).ingredients.forEach(ing => (ing.amount = +ing.amount));
+
     if (this.recipe.id) {
       this.store.dispatch(
         RecipesAction.editRecipe({ id: this.recipe.id, ...this.recipeForm.value })

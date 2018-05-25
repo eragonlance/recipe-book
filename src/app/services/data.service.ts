@@ -24,7 +24,6 @@ export class DataService {
           if (!recipe['ingredients']) {
             recipe['ingredients'] = [];
           }
-          recipe.ingredients.forEach(ing => (ing.amount = +ing.amount));
           return recipe;
         })
       );
