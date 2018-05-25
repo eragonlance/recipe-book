@@ -8,6 +8,8 @@ import { DialogComponent } from '../../dialog/dialog.component';
 import { Recipe } from '../../models/recipe.model';
 import { RecipesState } from '../../ngrx/reducers/recipes.reducer';
 import { RecipesAction } from '../../ngrx/actions/recipes.action';
+import { Ingredient } from '../../models/ingredient.model';
+import { ShoppingAction } from '../../ngrx/actions/shopping.action';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -40,6 +42,10 @@ export class RecipeDetailComponent implements OnInit {
         };
       })
     );
+  }
+
+  onAddToShoppingList(ings: Ingredient[]) {
+    this.store.dispatch(ShoppingAction.addIngredient(...ings));
   }
 
   onDeleteRcipe(recipe: Recipe) {

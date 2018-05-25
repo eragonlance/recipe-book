@@ -11,10 +11,7 @@ export function shoppingReducer(state: ShoppingState = initialState, action): Sh
   switch (action.type) {
     case ShoppingAction.ADD_INGREDIENT:
       return {
-        ingredients: [
-          ...state.ingredients,
-          ...action.payload.map((ing: Ingredient) => (ing = { ...ing }))
-        ]
+        ingredients: addIngredients(state.ingredients, action.payload)
       };
 
     case ShoppingAction.UPDATE_INGREDIENT:
@@ -36,6 +33,9 @@ export function shoppingReducer(state: ShoppingState = initialState, action): Sh
         )
       };
 
+    case ShoppingAction.REMOVE_ALL:
+      return { ingredients: [] };
+
     default:
       return state;
   }
@@ -43,4 +43,19 @@ export function shoppingReducer(state: ShoppingState = initialState, action): Sh
 
 export interface ShoppingState {
   ingredients: Ingredient[];
+}
+
+function addIngredients(currentList: Ingredient[], ings: Ingredient[]): Ingredient[] {
+  const newList = [...currentList];
+
+  ings.forEach((ing: Ingredient) => {
+    const idx = newList.findIndex((eIng: Ingredient) => eIng.name === ing.name);
+    if (idx !== -1) {
+      newList[idx] = new Ingredient(ing.name, newList[idx].amount + ing.amount);
+    } else {
+      newList.push(ing);
+    }
+  });
+
+  return newList;
 }

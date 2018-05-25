@@ -6,7 +6,7 @@
         <span>Manage recipe</span>
       </button>
       <mat-menu #menu>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="onAddToShoppingList(data.recipe.ingredients)">
           <i class="material-icons">add_shopping_cart</i>
           <span>Add to shopping list</span>
         </button>
