@@ -1,7 +1,6 @@
-import { Utility } from './../shared/utilities';
+import { Utils } from '../shared/utils';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { RecipeService } from './recipe.service';
 import { routeTransition } from '../shared/animations';
 
 @Component({
@@ -11,11 +10,10 @@ import { routeTransition } from '../shared/animations';
   animations: [routeTransition]
 })
 export class RecipesComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute, private recipeService: RecipeService) {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    Utility.headerTitle.next('Recipes');
-    this.recipeService.setRecipes(this.activatedRoute.snapshot.data['recipes']);
+    Utils.headerTitle.next('Recipes');
   }
 
   getState(outlet: RouterOutlet) {

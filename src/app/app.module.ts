@@ -11,8 +11,6 @@ import { AppRoutingModule } from './shared/app-routing.module';
 import { AppMaterialModule } from './shared/app-material.module';
 
 import { DataService } from './services/data.service';
-import { RecipeService } from './recipes/recipe.service';
-import { ShoppingService } from './shopping.service';
 import { AuthService } from './services/auth.service';
 import { ThemeSwitcherService } from './services/theme-switcher.service';
 
@@ -21,6 +19,11 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { recipesReducer } from './ngrx/reducers/recipes.reducer';
+import { RecipesEffect } from './ngrx/effects/recipes.effect';
+import { shoppingReducer } from './ngrx/reducers/shopping.reducer';
 
 @NgModule({
   declarations: [
@@ -39,9 +42,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    StoreModule.forRoot({ recipesReducer, shoppingReducer }),
+    EffectsModule.forRoot([RecipesEffect]),
     AppMaterialModule
   ],
-  providers: [RecipeService, ShoppingService, DataService, AuthService, ThemeSwitcherService],
+  providers: [DataService, AuthService, ThemeSwitcherService],
   bootstrap: [AppComponent],
   entryComponents: [SignInComponent, DialogComponent, ChangePasswordComponent]
 })

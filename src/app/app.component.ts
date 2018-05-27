@@ -1,9 +1,10 @@
-import { Recipe } from './recipes/recipe.model';
+import { Recipe } from './models/recipe.model';
 import { DataService } from './services/data.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { RecipeService } from './recipes/recipe.service';
 import { routeTransition } from './shared/animations';
 import { RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { RecipesAction } from './ngrx/actions/recipes.action';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,12 @@ import { RouterOutlet } from '@angular/router';
   animations: [routeTransition]
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  constructor(private dataService: DataService, private recipeService: RecipeService) {}
+  constructor(private store: Store<any>) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.dataService.fetchRecipes().subscribe(recipes => this.recipeService.setRecipes(recipes));
+    this.store.dispatch(RecipesAction.fetchRecipes());
   }
 
   getState(outlet: RouterOutlet) {

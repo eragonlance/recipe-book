@@ -1,20 +1,19 @@
 <div class="row">
   <div class="col-xs-12">
     <mat-card>
-      <app-shopping-edit></app-shopping-edit>
+      <app-shopping-edit [selectedIng]="selectedIng"></app-shopping-edit>
     </mat-card>
   </div>
 </div>
-<div class="row" *ngIf="ingredients.length !== 0" style="margin-top: 20px;">
+<div class="row" *ngIf="ingredients$ | async as ings" style="margin-top: 20px;">
   <div class="col-xs-12">
     <mat-card>
       <mat-form-field>
         <input matInput placeholder="Search" #filterInput (input)="filterString = filterInput.value">
       </mat-form-field>
       <div style="max-height: 50vh; overflow: auto">
-        <div class="list-item" *ngFor="let ing of ingredients | filter:filterString:'name'"
-          [class.active]="ing === selectedIng" [style.backgroundColor]="ing === selectedIng? themeSwitcherService.getAccentColor():'unset'"
-          (click)="onSelect(ing)" @enterLeave>
+        <div class="list-item" *ngFor="let ing of ings | filter:filterString:'name'" [class.active]="ing === selectedIng" [style.backgroundColor]="ing === selectedIng? themeSwitcherService.getAccentColor():'unset'"
+          (click)="selectedIng = selectedIng === ing ? null : ing" @enterLeave>
           <span>{{ ing.name }} ({{ ing.amount }})</span>
           <span class="icon-delete" style="margin-left: 20px" *ngIf="ing === selectedIng" (click)="onDelete(ing)"></span>
         </div>

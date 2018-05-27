@@ -1,17 +1,13 @@
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publishLast';
-import { Recipe } from '../recipes/recipe.model';
+import { Recipe } from '../models/recipe.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DataService {
-  private prefetchedRecipes: Observable<Recipe[]>;
-
-  constructor(private http: HttpClient) {
-    this.fetchRecipes(true);
-  }
+  constructor(private http: HttpClient) {}
 
   saveRecipes(token: string, recipes: Recipe[]): Observable<Object> {
     return this.http.put(
@@ -20,21 +16,16 @@ export class DataService {
     );
   }
 
-  fetchRecipes(refresh = false): Observable<Recipe[]> {
-    if (refresh) {
-      this.prefetchedRecipes = this.http
-        .get<Recipe[]>('https://recipe-book-eragonlance.firebaseio.com/recipes.json')
-        .map(recipes =>
-          recipes.map(recipe => {
-            if (!recipe['ingredients']) {
-              recipe['ingredients'] = [];
-            }
-            return recipe;
-          })
-        )
-        .publishLast()
-        .refCount();
-    }
-    return this.prefetchedRecipes;
+  fetchRecipes(): Observable<Recipe[]> {
+    return this.http
+      .get<Recipe[]>('https://recipe-book-eragonlance.firebaseio.com/recipes.json')
+      .map(recipes =>
+        recipes.map(recipe => {
+          if (!recipe['ingredients']) {
+            recipe['ingredients'] = [];
+          }
+          return recipe;
+        })
+      );
   }
 }

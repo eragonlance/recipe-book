@@ -1,28 +1,24 @@
-import { Subscription } from 'rxjs/Subscription';
-import { Recipe } from './../recipe.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RecipeService } from '../recipe.service';
+import { Recipe } from '../../models/recipe.model';
+import { Component, OnInit } from '@angular/core';
 import { ThemeSwitcherService } from '../../services/theme-switcher.service';
+import { Observable } from 'rxjs/Observable';
+import { RecipesState } from '../../ngrx/reducers/recipes.reducer';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.styl']
 })
-export class RecipeListComponent implements OnInit, OnDestroy {
-  recipes: Recipe[];
-  private recipesSub: Subscription;
+export class RecipeListComponent implements OnInit {
+  recipes$: Observable<Recipe[]>;
 
-  constructor(
-    private recipeService: RecipeService,
-    private themeSwitcherService: ThemeSwitcherService
-  ) {}
+  constructor(private themeSwitcherService: ThemeSwitcherService, private store: Store<any>) {}
 
   ngOnInit() {
-    this.recipes = this.recipeService.getRecipes();
-    this.recipesSub = this.recipeService.recipesRefChanged.subscribe(
-      () => (this.recipes = this.recipeService.getRecipes())
-    );
+    this.recipes$ = this.store
+      .select('recipesReducer')
+      .map((recipesState: RecipesState) => recipesState.recipes);
   }
 
   onMouseEnterGridItem(e: MouseEvent) {
@@ -33,9 +29,5 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   onMouseLeaveGridItem(e: MouseEvent) {
     const gridItemTitle = <HTMLElement>(<HTMLElement>e.target).nextElementSibling;
     gridItemTitle.style.backgroundColor = 'rgba(0,0,0,.38)';
-  }
-
-  ngOnDestroy() {
-    this.recipesSub.unsubscribe();
   }
 }

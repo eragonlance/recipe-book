@@ -1,19 +1,20 @@
 import { CustomValidators } from './../../shared/custom-validators';
-import { Subscription } from 'rxjs/Subscription';
-import { ShoppingService } from './../../shopping.service';
-import { Ingredient } from './../../shared/ingredient.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Ingredient } from '../../models/ingredient.model';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material';
+import { Utils } from '../../shared/utils';
+import { Store } from '@ngrx/store';
+import { ShoppingAction } from '../../ngrx/actions/shopping.action';
 
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.styl']
 })
-export class ShoppingEditComponent implements OnInit, OnDestroy {
-  selectedIng: Ingredient;
-  selectedIngSub: Subscription;
+export class ShoppingEditComponent implements OnInit, OnChanges {
+  @Input() selectedIng: Ingredient;
+
   addIngForm: FormGroup;
   errorStateMatcher: ErrorStateMatcher = {
     isErrorState: (control: FormControl) => {
@@ -28,26 +29,28 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     return this.addIngForm.get('amount');
   }
 
-  constructor(private shoppingService: ShoppingService) {}
+  constructor(private store: Store<any>) {}
 
   ngOnInit() {
     this.addIngForm = new FormGroup({
       name: new FormControl(null, Validators.required),
       amount: new FormControl(null, [Validators.required, CustomValidators.positiveNumber])
     });
+  }
 
-    this.selectedIngSub = this.shoppingService.selectedIng.subscribe((ing: Ingredient) => {
-      this.selectedIng = ing;
-      if (ing) {
-        this.addIngForm.reset({
-          name: ing.name,
-          amount: ing.amount
-        });
-        this.name.disable();
-      } else {
-        this.name.enable();
-      }
-    });
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['selectedIng'].isFirstChange()) return;
+
+    if (this.selectedIng) {
+      this.addIngForm.reset({
+        name: this.selectedIng.name,
+        amount: this.selectedIng.amount
+      });
+      this.name.disable();
+    } else {
+      this.name.enable();
+      this.addIngForm.reset();
+    }
   }
 
   onSubmit() {
@@ -58,22 +61,27 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     }
 
     if (this.selectedIng) {
-      this.shoppingService.updateIng(this.name.value, this.amount.value);
+      this.store.dispatch(
+        ShoppingAction.updateIngredient(new Ingredient(this.name.value, this.amount.value))
+      );
     } else {
-      this.shoppingService.addIng(new Ingredient(this.name.value, +this.amount.value));
+      this.store.dispatch(
+        ShoppingAction.addIngredient(new Ingredient(this.name.value, this.amount.value))
+      );
       this.addIngForm.reset();
     }
   }
 
   onClickRemoveAll() {
-    this.shoppingService.removeAll();
+    this.store.dispatch(ShoppingAction.removeAll());
   }
 
   onClickAddRandom(n: number) {
-    this.shoppingService.addRandom(n);
-  }
-
-  ngOnDestroy() {
-    this.selectedIngSub.unsubscribe();
+    const ings: Ingredient[] = [];
+    for (let i = 0; i < n; i++) {
+      const name = Utils.strRand(10);
+      ings.push(new Ingredient(name, Utils.numRand(1, 100)));
+    }
+    this.store.dispatch(ShoppingAction.addIngredient(...ings));
   }
 }

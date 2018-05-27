@@ -1,13 +1,16 @@
 import { ChangePasswordComponent } from './../account/change-password/change-password.component';
 import { AuthService } from '../services/auth.service';
 import { DataService } from '../services/data.service';
-import { Utility } from './../shared/utilities';
+import { Utils } from '../shared/utils';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { RecipeService } from '../recipes/recipe.service';
 import { MatDialog } from '@angular/material';
 import { SignInComponent } from '../account/sign-in/sign-in.component';
 import { DialogComponent } from '../dialog/dialog.component';
+import { Store } from '@ngrx/store';
+import { RecipesAction } from '../ngrx/actions/recipes.action';
+import { RecipesState } from '../ngrx/reducers/recipes.reducer';
+import { Recipe } from '../models/recipe.model';
 
 @Component({
   selector: 'app-header',
@@ -21,13 +24,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    private recipeService: RecipeService,
     private matDialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<any>
   ) {}
 
   ngOnInit() {
-    this.headerTitleSub = Utility.headerTitle.subscribe(
+    this.headerTitleSub = Utils.headerTitle.subscribe(
       (headerTitle: string) => (this.headerTitle = headerTitle)
     );
 
@@ -105,19 +108,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
               }
             });
           } else {
-            this.dataService.saveRecipes(token, this.recipeService.getRecipes()).subscribe(
-              () => {
-                this.matDialog.open(DialogComponent, {
-                  width: '300px',
-                  data: {
-                    title: 'Success',
-                    content: 'Successfully saved to database.',
-                    type: 'alert'
-                  }
-                });
-              },
-              err => console.log(err)
-            );
+            const recipes$ = this.store
+              .select('recipesReducer')
+              .map((state: RecipesState) => state.recipes)
+              .take(1);
+            recipes$.subscribe((recipes: Recipe[]) => {
+              this.dataService.saveRecipes(token, recipes).subscribe(
+                () => {
+                  this.matDialog.open(DialogComponent, {
+                    width: '300px',
+                    data: {
+                      title: 'Success',
+                      content: 'Successfully saved to database.',
+                      type: 'alert'
+                    }
+                  });
+                },
+                err => console.log(err)
+              );
+            });
           }
         });
       });
@@ -137,10 +146,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       })
       .afterClosed()
       .subscribe(res => {
-        if (res)
-          this.dataService
-            .fetchRecipes(true)
-            .subscribe(recipes => this.recipeService.setRecipes(recipes));
+        if (res) this.store.dispatch(RecipesAction.fetchRecipes());
       });
   }
 

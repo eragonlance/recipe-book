@@ -1,5 +1,4 @@
-<form *ngIf="recipeIdIsValid || !isInEditMode; else notFound" [formGroup]="recipeForm"
-  (ngSubmit)="onSubmit()">
+<form *ngIf="recipe; else notFound" [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
   <div class="row end-xs">
     <div class="col-xs-12">
       <button mat-raised-button color="primary" type="submit">
@@ -15,8 +14,8 @@
 
   <mat-card style="margin-top: 10px;">
     <h2>
-      <i class="material-icons">{{ isInEditMode? 'edit':'insert_drive_file' }}</i>
-      {{ isInEditMode? 'Edit Recipe':'New Recipe' }}
+      <i class="material-icons">{{ recipe.id? 'edit':'insert_drive_file' }}</i>
+      {{ recipe.id? 'Edit Recipe':'New Recipe' }}
     </h2>
 
     <mat-form-field class="full-width">
@@ -51,8 +50,7 @@
         </div>
       </ng-container>
       <svg height="30" width="30" (click)="onAddIng()" style="cursor: pointer; margin-top: 8px">
-        <circle cx="15" cy="15" r="15" [attr.fill]="themeSwitcherService.getAccentColor()"
-        />
+        <circle cx="15" cy="15" r="15" [attr.fill]="themeSwitcherService.getAccentColor()" />
         <line x1="7" y1="15" x2="23" y2="15" stroke-width="1" stroke="black" />
         <line x1="15" y1="7" x2="15" y2="23" stroke-width="1" stroke="black" />
       </svg>
