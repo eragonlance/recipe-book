@@ -61,12 +61,7 @@ export class Utils {
   }
 
   /** Immutably splice an array and return the new one */
-  static spliceReturnNewArray(
-    arr: any[],
-    start: number,
-    deleteCount?: number,
-    ...args: any[]
-  ): any[] {
+  static immutableSplice(arr: any[], start: number, deleteCount?: number, ...args: any[]): any[] {
     const tmp = [...arr];
     tmp.splice(start, deleteCount, ...args);
     return tmp;

@@ -7,19 +7,24 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const InlineChunkWebpackPlugin = require('inline-chunks-html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const extractTextPluginHash = new ExtractTextPlugin({ filename: '[name].[hash].bundle.css' });
+const extractTextPluginHash = new ExtractTextPlugin({
+  filename: '[name].[contenthash:20].bundle.css'
+});
 const extractTextPluginNoHash = new ExtractTextPlugin({ filename: '[name].bundle.css' });
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const rxPaths = require('rxjs/_esm5/path-mapping');
 const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
-const cssnano = require('cssnano');
+const postcssImports = require('postcss-import');
 
 const { NoEmitOnErrorsPlugin, EnvironmentPlugin, HashedModuleIdsPlugin } = require('webpack');
 const {
   BaseHrefWebpackPlugin,
-  SuppressExtractedTextChunksWebpackPlugin
+  SuppressExtractedTextChunksWebpackPlugin,
+  CleanCssWebpackPlugin,
+  BundleBudgetPlugin,
+  PostcssCliResources
 } = require('@angular/cli/plugins/webpack');
 const { CommonsChunkPlugin, ModuleConcatenationPlugin } = require('webpack').optimize;
 const { PurifyPlugin } = require('@angular-devkit/build-optimizer');
@@ -31,54 +36,122 @@ const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_mod
 const entryPoints = [
   'inline',
   'polyfills',
+  'sw-register',
   'css/common',
   'css/deeppurpleAmber',
   'css/purpleGreen',
+  'vendor',
   'main'
 ];
+const hashFormat = {
+  chunk: '.[chunkhash:20]',
+  extract: '.[contenthash:20]',
+  file: '.[hash:20]',
+  script: '.[hash:20]'
+};
 const baseHref = '';
 const deployUrl = '';
-const postcssPlugins = function() {
+const projectRoot = process.cwd();
+const maximumInlineSize = 10;
+const postcssPlugins = function(loader) {
   return [
-    postcssUrl({
-      url: URL => {
-        const { url } = URL;
-        // Only convert root relative URLs, which CSS-Loader won't process into require().
-        if (!url.startsWith('/') || url.startsWith('//')) {
-          return URL.url;
-        }
-        if (deployUrl.match(/:\/\//)) {
-          // If deployUrl contains a scheme, ignore baseHref use deployUrl as is.
-          return `${deployUrl.replace(/\/$/, '')}${url}`;
-        } else if (baseHref.match(/:\/\//)) {
-          // If baseHref contains a scheme, include it as is.
-          return baseHref.replace(/\/$/, '') + `/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
-        } else {
-          // Join together base-href, deploy-url and the original URL.
-          // Also dedupe multiple slashes into single ones.
-          return `/${baseHref}/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
-        }
+    postcssImports({
+      resolve: (url, context) => {
+        return new Promise((resolve, reject) => {
+          let hadTilde = false;
+          if (url && url.startsWith('~')) {
+            url = url.substr(1);
+            hadTilde = true;
+          }
+          loader.resolve(context, (hadTilde ? '' : './') + url, (err, result) => {
+            if (err) {
+              if (hadTilde) {
+                reject(err);
+                return;
+              }
+              loader.resolve(context, url, (err, result) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve(result);
+                }
+              });
+            } else {
+              resolve(result);
+            }
+          });
+        });
+      },
+      load: filename => {
+        return new Promise((resolve, reject) => {
+          loader.fs.readFile(filename, (err, data) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            const content = data.toString();
+            resolve(content);
+          });
+        });
       }
     }),
-    autoprefixer({
-      flexbox: false
+    postcssUrl({
+      filter: ({ url }) => url.startsWith('~'),
+      url: ({ url }) => {
+        const fullPath = path.join(projectRoot, 'node_modules', url.substr(1));
+        return path.relative(loader.context, fullPath).replace(/\\/g, '/');
+      }
     }),
-    cssnano()
+    postcssUrl([
+      {
+        // Only convert root relative URLs, which CSS-Loader won't process into require().
+        filter: ({ url }) => url.startsWith('/') && !url.startsWith('//'),
+        url: ({ url }) => {
+          if (deployUrl.match(/:\/\//) || deployUrl.startsWith('/')) {
+            // If deployUrl is absolute or root relative, ignore baseHref & use deployUrl as is.
+            return `${deployUrl.replace(/\/$/, '')}${url}`;
+          } else if (baseHref.match(/:\/\//)) {
+            // If baseHref contains a scheme, include it as is.
+            return baseHref.replace(/\/$/, '') + `/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
+          } else {
+            // Join together base-href, deploy-url and the original URL.
+            // Also dedupe multiple slashes into single ones.
+            return `/${baseHref}/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
+          }
+        }
+      },
+      {
+        // TODO: inline .cur if not supporting IE (use browserslist to check)
+        filter: asset => {
+          return maximumInlineSize > 0 && !asset.hash && !asset.absolutePath.endsWith('.cur');
+        },
+        url: 'inline',
+        // NOTE: maxSize is in KB
+        maxSize: maximumInlineSize,
+        fallback: 'rebase'
+      },
+      { url: 'rebase' }
+    ]),
+    PostcssCliResources({
+      deployUrl: loader.loaders[loader.loaderIndex].options.ident == 'extracted' ? '' : deployUrl,
+      loader,
+      filename: `[name]${hashFormat.file}.[ext]`
+    }),
+    autoprefixer({ grid: true })
   ];
 };
 
 module.exports = {
   resolve: {
     extensions: ['.ts', '.js'],
-    modules: ['./node_modules', './node_modules'],
     symlinks: true,
-    alias: {
-      rxjs: 'rxjs/_esm2015'
-    },
+    modules: ['./src', './node_modules'],
+    alias: rxPaths(),
     mainFields: ['es2015', 'browser', 'module', 'main']
   },
   resolveLoader: {
-    modules: ['./node_modules', './node_modules']
+    modules: ['./node_modules', './node_modules/@angular/cli/node_modules'],
+    alias: rxPaths()
   },
   entry: {
     main: ['./src/main.ts'],
@@ -91,8 +164,8 @@ module.exports = {
   },
   output: {
     path: path.join(process.cwd(), 'dist'),
-    filename: 'js/[name].[chunkhash].bundle.js',
-    chunkFilename: 'js/[id].[chunkhash].js',
+    filename: 'js/[name].[chunkhash:20].bundle.js',
+    chunkFilename: 'js/[id].[chunkhash:20].chunk.js',
     crossOriginLoading: false
   },
   module: {
@@ -102,8 +175,31 @@ module.exports = {
         loader: 'raw-loader'
       },
       {
+        test: /\.(eot|svg|cur)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[hash:20].[ext]',
+          limit: 10000
+        }
+      },
+      {
+        test: /\.(jpg|png|webp|gif|otf|ttf|woff|woff2|ani)$/,
+        loader: 'url-loader',
+        options: {
+          name: '[name].[hash:20].[ext]',
+          limit: 10000
+        }
+      },
+      {
         test: /\.js$/,
         use: [
+          {
+            loader: 'cache-loader',
+            options: {
+              cacheDirectory:
+                '/home/tuan/Documents/practice/recipe-book/node_modules/@angular-devkit/build-optimizer/src/.cache'
+            }
+          },
           {
             loader: '@angular-devkit/build-optimizer/webpack-loader',
             options: {
@@ -126,19 +222,15 @@ module.exports = {
         ],
         test: /\.css$/,
         use: [
-          'exports-loader?module.exports.toString()',
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: false,
-              importLoaders: 1
-            }
+            loader: 'raw-loader'
           },
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: postcssPlugins
+              ident: 'embedded',
+              plugins: postcssPlugins,
+              sourceMap: false
             }
           }
         ]
@@ -147,19 +239,15 @@ module.exports = {
         exclude: [path.join(process.cwd(), 'src/themes/')],
         test: /\.styl$/,
         use: [
-          'exports-loader?module.exports.toString()',
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: false,
-              importLoaders: 1
-            }
+            loader: 'raw-loader'
           },
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: postcssPlugins
+              ident: 'embedded',
+              plugins: postcssPlugins,
+              sourceMap: false
             }
           },
           {
@@ -176,17 +264,14 @@ module.exports = {
         loaders: extractTextPluginHash.extract({
           use: [
             {
-              loader: 'css-loader',
-              options: {
-                sourceMap: false,
-                importLoaders: 1
-              }
+              loader: 'raw-loader'
             },
             {
               loader: 'postcss-loader',
               options: {
-                ident: 'postcss',
-                plugins: postcssPlugins
+                ident: 'extracted',
+                plugins: postcssPlugins,
+                sourceMap: false
               }
             },
             {
@@ -196,7 +281,8 @@ module.exports = {
                 paths: []
               }
             }
-          ]
+          ],
+          publicPath: ''
         })
       },
       {
@@ -213,20 +299,18 @@ module.exports = {
         loaders: extractTextPluginNoHash.extract({
           use: [
             {
-              loader: 'css-loader',
-              options: {
-                sourceMap: false,
-                importLoaders: 1
-              }
+              loader: 'raw-loader'
             },
             {
               loader: 'postcss-loader',
               options: {
-                ident: 'postcss',
-                plugins: postcssPlugins
+                ident: 'extracted',
+                plugins: postcssPlugins,
+                sourceMap: false
               }
             }
-          ]
+          ],
+          publicPath: ''
         })
       },
       {
@@ -265,14 +349,16 @@ module.exports = {
         }
       ],
       {
-        ignore: ['.gitkeep'],
+        ignore: ['.gitkeep', '**/.DS_Store', '**/Thumbs.db'],
         debug: 'warning'
       }
     ),
     new ProgressPlugin(),
     new CircularDependencyPlugin({
       exclude: /(\\|\/)node_modules(\\|\/)/,
-      failOnError: false
+      failOnError: false,
+      onDetected: false,
+      cwd: projectRoot
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
@@ -289,15 +375,15 @@ module.exports = {
       cache: true,
       showErrors: true,
       chunks: 'all',
-      excludeChunks: ['css/purpleGreen', 'css/deeppurpleAmber'],
+      excludeChunks: ['css/purpleGreen'],
       title: 'Webpack App',
       xhtml: true,
       chunksSortMode: function sort(left, right) {
         let leftIndex = entryPoints.indexOf(left.names[0]);
-        let rightindex = entryPoints.indexOf(right.names[0]);
-        if (leftIndex > rightindex) {
+        let rightIndex = entryPoints.indexOf(right.names[0]);
+        if (leftIndex > rightIndex) {
           return 1;
-        } else if (leftIndex < rightindex) {
+        } else if (leftIndex < rightIndex) {
           return -1;
         } else {
           return 0;
@@ -317,17 +403,20 @@ module.exports = {
     extractTextPluginHash,
     extractTextPluginNoHash,
     new SuppressExtractedTextChunksWebpackPlugin(),
+    new CleanCssWebpackPlugin(),
     new EnvironmentPlugin({
       NODE_ENV: 'production'
     }),
     new HashedModuleIdsPlugin({
       hashFunction: 'md5',
-      hashDigest: 'base64'
+      hashDigest: 'base64',
+      hashDigestLength: 4
     }),
     new ModuleConcatenationPlugin({}),
+    new BundleBudgetPlugin({}),
     new PurifyPlugin(),
     new UglifyJsPlugin({
-      test: /\.js$/i,
+      test: /\.js(\?.*)?$/i,
       extractComments: false,
       sourceMap: false,
       cache: true,
@@ -335,21 +424,20 @@ module.exports = {
       uglifyOptions: {
         output: {
           ascii_only: true,
-          comments: false
+          comments: false,
+          webkit: true
         },
         ecma: 6,
         warnings: false,
         ie8: false,
         mangle: {
-          toplevel: true,
-          eval: true
+          safari10: true
         },
         compress: {
+          typeofs: false,
+          inline: 1,
           pure_getters: true,
-          passes: 3,
-          toplevel: true,
-          hoist_props: true,
-          inline: 1
+          passes: 3
         }
       }
     }),
@@ -363,10 +451,6 @@ module.exports = {
       tsConfigPath: 'src/tsconfig.app.json',
       exclude: ['**/*.spec.ts'],
       compilerOptions: {}
-    }),
-    new InlineChunkWebpackPlugin({
-      inlineChunks: ['inline'],
-      deleteFile: true
     })
   ],
   node: {

@@ -1,4 +1,4 @@
-import { Recipe } from '../../models/recipe.model';
+import { Recipe } from 'app/models';
 
 export class RecipesAction {
   static FETCH_RECIPES = 'FETCH_RECIPES';
@@ -13,11 +13,11 @@ export class RecipesAction {
   }
 
   static addRecipe(recipe: Recipe) {
-    return { type: RecipesAction.ADD_RECIPE, payload: recipe };
+    return { type: RecipesAction.ADD_RECIPE, payload: Recipe.clone(recipe) };
   }
 
   static editRecipe(recipe: Recipe) {
-    return { type: RecipesAction.EDIT_RECIPE, payload: recipe };
+    return { type: RecipesAction.EDIT_RECIPE, payload: Recipe.clone(recipe) };
   }
 
   static removeRecipe(id: number) {

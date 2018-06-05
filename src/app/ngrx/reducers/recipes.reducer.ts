@@ -1,6 +1,6 @@
-import { Recipe } from '../../models/recipe.model';
-import { RecipesAction } from '../actions/recipes.action';
-import { Utils } from '../../shared/utils';
+import { Recipe } from 'app/models';
+import { RecipesAction } from 'app/ngrx/actions';
+import { Utils } from 'app/shared/utils';
 
 const initialState: RecipesState = {
   recipes: [],
@@ -21,18 +21,18 @@ export function recipesReducer(state: RecipesState = initialState, action): Reci
 
     case RecipesAction.ADD_RECIPE:
       return {
-        recipes: [...state.recipes, Recipe.clone(action.payload)],
+        recipes: [...state.recipes, action.payload],
         pending: false,
         error: null
       };
 
     case RecipesAction.EDIT_RECIPE:
       return {
-        recipes: Utils.spliceReturnNewArray(
+        recipes: Utils.immutableSplice(
           state.recipes,
-          state.recipes.findIndex((recipe: Recipe) => recipe.id === action.payload.id),
+          state.recipes.findIndex(recipe => recipe.id === action.payload.id),
           1,
-          Recipe.clone(action.payload)
+          action.payload
         ),
         pending: false,
         error: null
@@ -40,11 +40,7 @@ export function recipesReducer(state: RecipesState = initialState, action): Reci
 
     case RecipesAction.REMOVE_RECIPE:
       return {
-        recipes: Utils.spliceReturnNewArray(
-          state.recipes,
-          state.recipes.findIndex((recipe: Recipe) => recipe.id === action.payload),
-          1
-        ),
+        recipes: state.recipes.filter(recipe => recipe.id !== action.payload),
         pending: false,
         error: null
       };
