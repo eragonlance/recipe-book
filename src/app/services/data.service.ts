@@ -12,20 +12,16 @@ export class DataService {
   saveRecipes(token: string, recipes: Recipe[]): Observable<Object> {
     return this.http.put(
       'https://recipe-book-eragonlance.firebaseio.com/recipes.json?auth=' + token,
-      recipes
+      recipes.reduce((recipesObj, recipe) => {
+        recipesObj[recipe.id] = recipe;
+        return recipesObj;
+      }, {})
     );
   }
 
   fetchRecipes(): Observable<Recipe[]> {
     return this.http
-      .get<Recipe[]>('https://recipe-book-eragonlance.firebaseio.com/recipes.json')
-      .map(recipes =>
-        recipes.map(recipe => {
-          if (!recipe['ingredients']) {
-            recipe['ingredients'] = [];
-          }
-          return recipe;
-        })
-      );
+      .get<Object>('https://recipe-book-eragonlance.firebaseio.com/recipes.json')
+      .map(recipesObj => Object.values(recipesObj));
   }
 }

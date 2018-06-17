@@ -15,7 +15,7 @@ export class RecipesEffect {
   fetchRecipes$ = this.actions$.ofType(RecipesAction.FETCH_RECIPES).switchMap(action =>
     this.dataService
       .fetchRecipes()
-      .map((recipes: Recipe[]) => ({ type: RecipesAction.FETCH_RECIPES_SUCCESS, payload: recipes }))
+      .map(recipes => ({ type: RecipesAction.FETCH_RECIPES_SUCCESS, payload: recipes }))
       .catch(err => Observable.of({ type: RecipesAction.FETCH_RECIPES_ERROR, payload: err }))
   );
 
